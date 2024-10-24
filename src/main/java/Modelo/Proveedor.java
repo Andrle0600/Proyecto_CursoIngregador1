@@ -16,16 +16,16 @@ public class Proveedor implements Serializable {
     private String nombre;
     private String telefono;
     private String correo;
-    private String dirección;
+    private String direccion;
 
     public Proveedor() {
     }
 
-    public Proveedor(String nombre, String telefono, String correo, String dirección) {
+    public Proveedor(String nombre, String telefono, String correo, String direccion) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
-        this.dirección = dirección;
+        this.direccion = direccion;
     }
 
     public int getIdProveedor() {
@@ -60,13 +60,12 @@ public class Proveedor implements Serializable {
         this.correo = correo;
     }
 
-    public String getDirección() {
-        return dirección;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(String dirección) {
-        this.dirección = dirección;
-    }
-    
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    } 
     
 }
