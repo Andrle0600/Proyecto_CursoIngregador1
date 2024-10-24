@@ -113,6 +113,11 @@ public class PantallaLogistica extends javax.swing.JFrame {
                 btnProveedoresMouseExited(evt);
             }
         });
+        btnProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout bckgLayout = new javax.swing.GroupLayout(bckg);
         bckg.setLayout(bckgLayout);
@@ -188,6 +193,13 @@ public class PantallaLogistica extends javax.swing.JFrame {
     private void btnProveedoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseExited
         btnProveedores.setBackground(new java.awt.Color(200, 0, 180));
     }//GEN-LAST:event_btnProveedoresMouseExited
+
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
+        PantallaProveedores prov=new PantallaProveedores();
+        prov.setVisible(true);
+        prov.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private ImageIcon loadImage(String imageName) {
         String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
