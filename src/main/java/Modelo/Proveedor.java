@@ -1,7 +1,17 @@
 package Modelo;
 
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Proveedor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProveedor;
+    @Basic
     private String nombre;
     private String telefono;
     private String correo;
