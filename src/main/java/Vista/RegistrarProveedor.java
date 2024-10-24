@@ -42,7 +42,7 @@ public class RegistrarProveedor extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(650, 450));
 
-        jPanel1.setBackground(new java.awt.Color(204, 0, 204));
+        jPanel1.setBackground(new java.awt.Color(182, 127, 226));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setMaximumSize(new java.awt.Dimension(650, 450));
         jPanel1.setMinimumSize(new java.awt.Dimension(650, 450));
@@ -53,14 +53,14 @@ public class RegistrarProveedor extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Registrar Proveedor");
 
-        jPanel3.setBackground(new java.awt.Color(204, 0, 204));
+        jPanel3.setBackground(new java.awt.Color(182, 127, 226));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Nombre");
 
-        txtNombre.setBackground(new java.awt.Color(255, 102, 255));
+        txtNombre.setBackground(new java.awt.Color(190, 162, 221));
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -86,14 +86,14 @@ public class RegistrarProveedor extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 0, 204));
+        jPanel4.setBackground(new java.awt.Color(182, 127, 226));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Correo");
 
-        txtCorreo.setBackground(new java.awt.Color(255, 102, 255));
+        txtCorreo.setBackground(new java.awt.Color(190, 162, 221));
         txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
         txtCorreo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -119,14 +119,14 @@ public class RegistrarProveedor extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(204, 0, 204));
+        jPanel5.setBackground(new java.awt.Color(182, 127, 226));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Teléfono");
 
-        txtTelefono.setBackground(new java.awt.Color(255, 102, 255));
+        txtTelefono.setBackground(new java.awt.Color(190, 162, 221));
         txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(0, 0, 0));
         txtTelefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -153,14 +153,14 @@ public class RegistrarProveedor extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(204, 0, 204));
+        jPanel6.setBackground(new java.awt.Color(182, 127, 226));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Dirección");
 
-        txtDireccion.setBackground(new java.awt.Color(255, 102, 255));
+        txtDireccion.setBackground(new java.awt.Color(190, 162, 221));
         txtDireccion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(0, 0, 0));
         txtDireccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
