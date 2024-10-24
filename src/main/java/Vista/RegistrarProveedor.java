@@ -186,7 +186,7 @@ public class RegistrarProveedor extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnLimpiar.setBackground(new java.awt.Color(200, 0, 180));
+        btnLimpiar.setBackground(new java.awt.Color(200, 76, 229));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");

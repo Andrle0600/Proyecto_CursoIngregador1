@@ -88,7 +88,7 @@ public class PantallaLogistica extends javax.swing.JFrame {
             }
         });
 
-        btnPedidos.setBackground(new java.awt.Color(200, 0, 180));
+        btnPedidos.setBackground(new java.awt.Color(200, 76, 229));
         btnPedidos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPedidos.setForeground(new java.awt.Color(0, 0, 0));
         btnPedidos.setText("PEDIDOS");
@@ -101,7 +101,7 @@ public class PantallaLogistica extends javax.swing.JFrame {
             }
         });
 
-        btnProveedores.setBackground(new java.awt.Color(200, 0, 180));
+        btnProveedores.setBackground(new java.awt.Color(200, 76, 229));
         btnProveedores.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(0, 0, 0));
         btnProveedores.setText("PROVEEDORES");
