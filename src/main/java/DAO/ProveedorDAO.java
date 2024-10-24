@@ -10,4 +10,6 @@ public interface ProveedorDAO {
     void actualizar(Proveedor prov);
 
     void eliminar(int id);
+    
+    Proveedor leerPorNombre(String nombre);
 }

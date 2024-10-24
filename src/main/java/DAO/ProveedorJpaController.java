@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -17,11 +18,11 @@ public class ProveedorJpaController implements Serializable {
     public ProveedorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    public ProveedorJpaController(){
-        emf=Persistence.createEntityManagerFactory("integradorPU");
+
+    public ProveedorJpaController() {
+        emf = Persistence.createEntityManagerFactory("integradorPU");
     }
-    
+
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -131,5 +132,19 @@ public class ProveedorJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public Proveedor findByNombre(String nombre) {
+        EntityManager em = getEntityManager();
+        String query = "SELECT p FROM Proveedor p WHERE LOWER(p.nombre) = LOWER(:nombre)";
+        try {
+            return em.createQuery(query, Proveedor.class)
+                    .setParameter("nombre", nombre)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
 }

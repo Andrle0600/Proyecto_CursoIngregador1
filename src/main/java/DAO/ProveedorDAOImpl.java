@@ -40,4 +40,10 @@ public class ProveedorDAOImpl implements ProveedorDAO {
             Logger.getLogger(ProveedorDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    public Proveedor leerPorNombre(String nombre) {
+        return provJpa.findByNombre(nombre);
+    }
+
 }

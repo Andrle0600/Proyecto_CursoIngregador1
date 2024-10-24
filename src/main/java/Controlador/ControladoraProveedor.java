@@ -25,4 +25,8 @@ public class ControladoraProveedor {
     public void eliminarProveedor(int id) {
         proveedorDao.eliminar(id);
     }
+    
+    public Proveedor leerPorNombre(String nombre){
+        return proveedorDao.leerPorNombre(nombre);
+    }
 }
