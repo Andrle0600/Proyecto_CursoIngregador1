@@ -1,8 +1,12 @@
 package Main;
 
+import Vista.RegistrarProveedor;
+
 public class ProyectoIngredor {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        RegistrarProveedor igu=new RegistrarProveedor();
+        igu.setVisible(true);
+        igu.setLocationRelativeTo(null);
     }
 }
