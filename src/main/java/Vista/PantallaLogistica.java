@@ -92,6 +92,8 @@ public class PantallaLogistica extends javax.swing.JFrame {
         btnPedidos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPedidos.setForeground(new java.awt.Color(0, 0, 0));
         btnPedidos.setText("PEDIDOS");
+        btnPedidos.setBorderPainted(false);
+        btnPedidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPedidosMouseEntered(evt);
@@ -105,6 +107,8 @@ public class PantallaLogistica extends javax.swing.JFrame {
         btnProveedores.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnProveedores.setForeground(new java.awt.Color(0, 0, 0));
         btnProveedores.setText("PROVEEDORES");
+        btnProveedores.setBorderPainted(false);
+        btnProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnProveedoresMouseEntered(evt);
@@ -129,13 +133,13 @@ public class PantallaLogistica extends javax.swing.JFrame {
                         .addGap(130, 130, 130)
                         .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(bckgLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bckgLayout.createSequentialGroup()
                         .addGap(170, 170, 170)
                         .addGroup(bckgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(bckgLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(111, 111, 111))
         );
         bckgLayout.setVerticalGroup(
@@ -143,24 +147,24 @@ public class PantallaLogistica extends javax.swing.JFrame {
             .addGroup(bckgLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bckg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bckg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bckg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bckg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -179,19 +183,19 @@ public class PantallaLogistica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnPedidosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPedidosMouseEntered
-        btnPedidos.setBackground(new java.awt.Color(225, 0, 205));
+        btnPedidos.setBackground(new java.awt.Color(220, 96, 249));
     }//GEN-LAST:event_btnPedidosMouseEntered
 
     private void btnPedidosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPedidosMouseExited
-        btnPedidos.setBackground(new java.awt.Color(200, 0, 180));
+        btnPedidos.setBackground(new java.awt.Color(200,76,229));
     }//GEN-LAST:event_btnPedidosMouseExited
 
     private void btnProveedoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseEntered
-        btnProveedores.setBackground(new java.awt.Color(225, 0, 205));
+        btnProveedores.setBackground(new java.awt.Color(220, 96, 249));
     }//GEN-LAST:event_btnProveedoresMouseEntered
 
     private void btnProveedoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseExited
-        btnProveedores.setBackground(new java.awt.Color(200, 0, 180));
+        btnProveedores.setBackground(new java.awt.Color(200,76,229));
     }//GEN-LAST:event_btnProveedoresMouseExited
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
