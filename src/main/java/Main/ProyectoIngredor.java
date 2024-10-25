@@ -1,11 +1,11 @@
 package Main;
 
-import Vista.RegistrarProveedor;
+import Vista.PantallaLogistica;
 
 public class ProyectoIngredor {
 
     public static void main(String[] args) {
-        RegistrarProveedor igu=new RegistrarProveedor();
+        PantallaLogistica igu = new PantallaLogistica();
         igu.setVisible(true);
         igu.setLocationRelativeTo(null);
     }
