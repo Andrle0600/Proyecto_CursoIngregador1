@@ -29,6 +29,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Añadir Producto");
 
         jPanel1.setBackground(new java.awt.Color(182, 127, 226));
 

@@ -20,6 +20,7 @@ public class EliminarProducto extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Eliminar Producto");
 
         jPanel1.setBackground(new java.awt.Color(182, 127, 226));
 
