@@ -102,6 +102,11 @@ public class PantallaLogistica extends javax.swing.JFrame {
                 btnPedidosMouseExited(evt);
             }
         });
+        btnPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPedidosActionPerformed(evt);
+            }
+        });
 
         btnProveedores.setBackground(new java.awt.Color(200, 76, 229));
         btnProveedores.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -204,6 +209,13 @@ public class PantallaLogistica extends javax.swing.JFrame {
         prov.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnProveedoresActionPerformed
+
+    private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
+        ListarPedidos listar=new ListarPedidos();
+        listar.setVisible(true);
+        listar.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnPedidosActionPerformed
 
     private ImageIcon loadImage(String imageName) {
         String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
