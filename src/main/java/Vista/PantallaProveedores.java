@@ -55,9 +55,7 @@ public class PantallaProveedores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Gestión Logística - Proveedores");
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 500));
 
@@ -475,6 +473,11 @@ public class PantallaProveedores extends javax.swing.JFrame {
                 btnContactarMouseExited(evt);
             }
         });
+        btnContactar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContactarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setBackground(new java.awt.Color(200, 76, 229));
         btnModificar.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -583,12 +586,12 @@ public class PantallaProveedores extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -618,7 +621,16 @@ public class PantallaProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCorreoPedidosMouseExited
 
     private void btnCorreoPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorreoPedidosActionPerformed
-        // TODO add your handling code here:
+        if (txtNombre.getText().isEmpty()) {
+            mostrarMensaje("Primero busque un proveedor", "error");
+        } else {
+            prov = control.getControladoraProveedor().leerPorNombre(txtNombre.getText());
+            int id = prov.getIdProveedor();
+            CorreoPedido correo = new CorreoPedido(id);
+            correo.setVisible(true);
+            correo.setLocationRelativeTo(null);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCorreoPedidosActionPerformed
 
     private void txtBuscarProveedorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarProveedorFocusGained
@@ -738,6 +750,19 @@ public class PantallaProveedores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void btnContactarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactarActionPerformed
+        if (txtNombre.getText().isEmpty()) {
+            mostrarMensaje("Primero busque un proveedor", "error");
+        } else {
+            prov = control.getControladoraProveedor().leerPorNombre(txtNombre.getText());
+            int id = prov.getIdProveedor();
+            CorreoPedido correo = new CorreoPedido(id);
+            correo.setVisible(true);
+            correo.setLocationRelativeTo(null);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnContactarActionPerformed
+
     private ImageIcon loadImage(String imageName) {
         String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
         return new ImageIcon(imagePath);
@@ -793,14 +818,12 @@ public class PantallaProveedores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -810,7 +833,6 @@ public class PantallaProveedores extends javax.swing.JFrame {
     private javax.swing.JPanel panelSideBar;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JTextField txtBuscarProveedor;
-    private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtCorreo1;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
