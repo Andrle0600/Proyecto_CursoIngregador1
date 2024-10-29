@@ -5,6 +5,7 @@ import Modelo.Proveedor;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import com.google.common.base.Strings;
 
 public class PantallaProveedores extends javax.swing.JFrame {
 
@@ -674,8 +675,10 @@ public class PantallaProveedores extends javax.swing.JFrame {
 
                 txtNombre.setText(prov.getNombre());
                 txtCorreo1.setText(prov.getCorreo());
-                txtTelefono.setText(prov.getTelefono());
-                txtDireccion.setText(prov.getDireccion());
+                String telefonoCompleto=prov.getTelefono();
+                String soloNumero=telefonoCompleto.replace("+51 ", "");
+                txtTelefono.setText(soloNumero);
+                txtDireccion.setText(Strings.isNullOrEmpty(prov.getDireccion()) ? "Dirección no registrada" : prov.getDireccion());
                 txtBuscarProveedor.setText("Buscar Proveedor");
                 txtBuscarProveedor.setForeground(new Color(102, 102, 102));
             }

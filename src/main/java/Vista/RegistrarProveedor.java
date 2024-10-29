@@ -2,8 +2,11 @@ package Vista;
 
 import Controlador.ControladoraGeneral;
 import Modelo.Proveedor;
+import com.google.common.base.Strings;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.EmailValidator;
 
 public class RegistrarProveedor extends javax.swing.JFrame {
 
@@ -327,19 +330,37 @@ public class RegistrarProveedor extends javax.swing.JFrame {
         String nombre = txtNombre.getText();
         String telefono = txtTelefono.getText();
         String correo = txtCorreo.getText();
-        String direccion = txtDireccion.getText();
+        //Uso de guava para transformar a null si lo deja vacío
+        String direccion = Strings.emptyToNull(txtDireccion.getText());
 
-        if (!nombre.isEmpty() && !telefono.isEmpty() && !correo.isEmpty()) {
-            prov.setCorreo(correo);
-            prov.setNombre(nombre);
-            prov.setDireccion(direccion);
-            prov.setTelefono(telefono);
-            control.getControladoraProveedor().crearProveedor(prov);
-            mostrarMensaje("Proveedor guardado correctamente", "informacion");
-            limpiar();
-        } else {
+        // Validar campos obligatorios
+        if (!camposObligatorios(nombre, telefono, correo)) {
             mostrarMensaje("Nombre, teléfono y correo no pueden quedar vacíos", "advertencia");
+            return;
         }
+
+        // Validar correo con una instancia de apache commons
+        EmailValidator emailValidator = EmailValidator.getInstance();
+        if (!emailValidator.isValid(correo)) {
+            mostrarMensaje("El correo electrónico no es válido", "error");
+            return;
+        }
+
+        // Validar y establecer teléfono
+        String telefonoCompleto = validarTelefono(telefono);
+        if (telefonoCompleto == null) {
+            mostrarMensaje("El número debe ser numérico, comenzar por 9 y tener 9 dígitos", "error");
+            return;
+        }
+
+        // Establecer los valores en el objeto proveedor y guardar
+        prov.setNombre(nombre);
+        prov.setCorreo(correo);
+        prov.setDireccion(direccion);
+        prov.setTelefono(telefonoCompleto);
+        control.getControladoraProveedor().crearProveedor(prov);
+        limpiar();
+        mostrarMensaje("Proveedor guardado correctamente", "informacion");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -370,11 +391,11 @@ public class RegistrarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnLimpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseEntered
-        btnLimpiar.setBackground(new java.awt.Color(220,96,249));
+        btnLimpiar.setBackground(new java.awt.Color(220, 96, 249));
     }//GEN-LAST:event_btnLimpiarMouseEntered
 
     private void btnLimpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseExited
-        btnLimpiar.setBackground(new java.awt.Color(200,76,229));
+        btnLimpiar.setBackground(new java.awt.Color(200, 76, 229));
     }//GEN-LAST:event_btnLimpiarMouseExited
 
     private void limpiar() {
@@ -408,6 +429,20 @@ public class RegistrarProveedor extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, mensaje, "Mensaje", tipoMensaje);
     }
 
+    // Método para validar campos obligatorios
+    private boolean camposObligatorios(String nombre, String telefono, String correo) {
+        return !nombre.isEmpty() && !telefono.isEmpty() && !correo.isEmpty();
+    }
+
+    // Método para validar y formatear el número de teléfono
+    private String validarTelefono(String telefono) {
+        //Se quita el espacio y se valida que todos sean números con apache commons
+        String numero = StringUtils.trim(telefono);
+        if (StringUtils.isNumeric(numero) && numero.startsWith("9") && numero.length() == 9) {
+            return Strings.nullToEmpty("+51 " + numero);
+        }
+        return null;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
