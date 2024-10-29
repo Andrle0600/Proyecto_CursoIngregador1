@@ -1,10 +1,11 @@
 package Controlador;
 
+import DAO.ProveedorDAO;
 import DAO.ProveedorDAOImpl;
 import Modelo.Proveedor;
 
 public class ControladoraProveedor {
-    private ProveedorDAOImpl proveedorDao;
+    private ProveedorDAO proveedorDao;
 
     public ControladoraProveedor() {
         this.proveedorDao = new ProveedorDAOImpl(){};
