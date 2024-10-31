@@ -1,13 +1,11 @@
 package Main;
 
-import Vista.GestionVentas;
-import Vista.GestionLogistica;
-import Vista.PantallaPrincipal;
+import Vista.Login;
 
 public class ProyectoIngredor {
 
     public static void main(String[] args) {
-        PantallaPrincipal igu=new PantallaPrincipal();
+        Login igu=new Login();
         igu.setVisible(true);
         igu.setLocationRelativeTo(null);
     }
