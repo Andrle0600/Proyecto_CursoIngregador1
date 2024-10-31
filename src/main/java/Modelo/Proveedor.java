@@ -17,15 +17,17 @@ public class Proveedor implements Serializable {
     private String telefono;
     private String correo;
     private String direccion;
+    private String RUC;
 
     public Proveedor() {
     }
 
-    public Proveedor(String nombre, String telefono, String correo, String direccion) {
+    public Proveedor(String nombre, String telefono, String correo, String direccion, String RUC) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.direccion = direccion;
+        this.RUC=RUC;
     }
 
     public int getIdProveedor() {
@@ -67,5 +69,12 @@ public class Proveedor implements Serializable {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     } 
-    
+
+    public String getRUC() {
+        return RUC;
+    }
+
+    public void setRUC(String RUC) {
+        this.RUC = RUC;
+    }
 }
