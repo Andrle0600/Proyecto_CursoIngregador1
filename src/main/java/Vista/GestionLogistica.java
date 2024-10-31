@@ -2,9 +2,9 @@ package Vista;
 
 import javax.swing.ImageIcon;
 
-public class PantallaLogistica extends javax.swing.JFrame {
+public class GestionLogistica extends javax.swing.JFrame {
 
-    public PantallaLogistica() {
+    public GestionLogistica() {
         initComponents();
     }
 
@@ -184,7 +184,10 @@ public class PantallaLogistica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        
+        PantallaPrincipal pant=new PantallaPrincipal();
+        pant.setVisible(true);
+        pant.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnPedidosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPedidosMouseEntered

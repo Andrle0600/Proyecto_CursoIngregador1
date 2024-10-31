@@ -116,6 +116,7 @@ public class RegistroNotaVenta extends javax.swing.JFrame {
         btnCancelarVenta.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelarVenta.setText("Cancelar venta");
         btnCancelarVenta.setBorderPainted(false);
+        btnCancelarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarVentaActionPerformed(evt);
@@ -127,6 +128,7 @@ public class RegistroNotaVenta extends javax.swing.JFrame {
         btnFinalizarVenta.setForeground(new java.awt.Color(0, 0, 0));
         btnFinalizarVenta.setText("Finalizar Venta");
         btnFinalizarVenta.setBorderPainted(false);
+        btnFinalizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("SubTotal:");

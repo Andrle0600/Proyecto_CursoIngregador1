@@ -366,7 +366,7 @@ public class RegistrarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        PantallaLogistica pant=new PantallaLogistica();
+        GestionLogistica pant=new GestionLogistica();
         pant.setVisible(true);
         pant.setLocationRelativeTo(null);
         this.dispose();

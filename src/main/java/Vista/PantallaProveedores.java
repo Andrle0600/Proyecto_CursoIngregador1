@@ -607,7 +607,7 @@ public class PantallaProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        PantallaLogistica log = new PantallaLogistica();
+        GestionLogistica log = new GestionLogistica();
         log.setVisible(true);
         log.setLocationRelativeTo(null);
         this.dispose();

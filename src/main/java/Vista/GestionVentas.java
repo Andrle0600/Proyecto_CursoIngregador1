@@ -171,7 +171,10 @@ public class GestionVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void btnNotaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotaVentaActionPerformed
-        // TODO add your handling code here:
+        RegistroNotaVenta notav=new RegistroNotaVenta();
+        notav.setVisible(true);
+        notav.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnNotaVentaActionPerformed
 
     private void btnVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseEntered
@@ -183,7 +186,10 @@ public class GestionVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-
+        PantallaPrincipal pant=new PantallaPrincipal();
+        pant.setVisible(true);
+        pant.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private ImageIcon loadImage(String imageName) {
