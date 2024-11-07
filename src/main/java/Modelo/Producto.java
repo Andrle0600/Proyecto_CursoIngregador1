@@ -1,12 +1,14 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +29,9 @@ public class Producto implements Serializable {
     @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
+    @OneToMany(mappedBy = "producto")
+    List<DetallePedido> detallesPedido;
+    
     public Producto() {
     }
 
@@ -76,6 +81,14 @@ public class Producto implements Serializable {
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public List<DetallePedido> getDetallesPedido() {
+        return detallesPedido;
+    }
+
+    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
+        this.detallesPedido = detallesPedido;
     }
 
 }
