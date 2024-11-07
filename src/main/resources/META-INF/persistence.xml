@@ -3,6 +3,7 @@
   <persistence-unit name="integradorPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Modelo.Proveedor</class>
+    <class>Modelo.Pedido</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bdesdiel?serverTimezome=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
