@@ -19,14 +19,9 @@ public class Pedido implements Serializable {
     private Date fechaPedido;
     @Basic
     private String estado="Pendiente";
-    private double total;
+    private double total=0;
 
     public Pedido() {
-    }
-
-    public Pedido(Date fechaPedido, double total) {
-        this.fechaPedido = fechaPedido;
-        this.total = total;
     }
 
     public int getIdPedido() {
