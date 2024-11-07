@@ -1,8 +1,10 @@
 package Vista;
 
 import Controlador.ControladoraGeneral;
+import Modelo.Pedido;
 import Modelo.Proveedor;
 import java.awt.Color;
+import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -11,10 +13,12 @@ public class RegistrarPedido extends javax.swing.JFrame {
 
     ControladoraGeneral control;
     List<Proveedor> proveedores;
+    Pedido ped;
 
     public RegistrarPedido() {
         initComponents();
         control = new ControladoraGeneral();
+        ped = new Pedido();
         proveedores = control.getControladoraProveedor().leerTodo();
         cargarProveedores();
     }
@@ -368,7 +372,7 @@ public class RegistrarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        GestionLogistica pant=new GestionLogistica();
+        GestionLogistica pant = new GestionLogistica();
         pant.setVisible(true);
         pant.setLocationRelativeTo(null);
         this.dispose();
@@ -383,7 +387,7 @@ public class RegistrarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReporteMouseExited
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        ListarPedidos listar=new ListarPedidos();
+        ListarPedidos listar = new ListarPedidos();
         listar.setVisible(true);
         listar.setLocationRelativeTo(null);
         this.dispose();
@@ -398,7 +402,16 @@ public class RegistrarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarPedidoMouseExited
 
     private void btnGenerarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPedidoActionPerformed
-        // TODO add your handling code here:
+        //Obtener datos
+        Date fecha=fechaPedido.getDate();
+        String proveedor=(String) comboProveedor.getSelectedItem();
+        Proveedor provPedido=control.getControladoraProveedor().leerPorNombre(proveedor);
+        //Validar datos
+        
+        //Establecer los valores
+        ped.setFechaPedido(fecha);
+        control.getControladoraPedido().crearPedido(ped);
+        
     }//GEN-LAST:event_btnGenerarPedidoActionPerformed
 
     private ImageIcon loadImage(String imageName) {
@@ -461,10 +474,10 @@ public class RegistrarPedido extends javax.swing.JFrame {
     private javax.swing.JPanel panelSideBar;
     private javax.swing.JPanel panelTitulo;
     // End of variables declaration//GEN-END:variables
-    
-    public void cargarProveedores(){
+
+    public void cargarProveedores() {
         comboProveedor.removeAllItems();
-        for(Proveedor provedor:proveedores){
+        for (Proveedor provedor : proveedores) {
             comboProveedor.addItem(provedor.getNombre());
         }
     }
