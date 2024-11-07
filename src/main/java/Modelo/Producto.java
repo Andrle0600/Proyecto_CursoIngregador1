@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "producto")
 public class Producto implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProducto;
@@ -21,6 +22,10 @@ public class Producto implements Serializable {
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id")
+    private Proveedor proveedor;
 
     public Producto() {
     }
@@ -63,6 +68,14 @@ public class Producto implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
 }
