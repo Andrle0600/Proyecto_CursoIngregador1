@@ -3,6 +3,7 @@ package Controlador;
 import DAO.ProveedorDAO;
 import DAO.ProveedorDAOImpl;
 import Modelo.Proveedor;
+import java.util.List;
 
 public class ControladoraProveedor {
     private ProveedorDAO proveedorDao;
@@ -29,5 +30,9 @@ public class ControladoraProveedor {
     
     public Proveedor leerPorNombre(String nombre){
         return proveedorDao.leerPorNombre(nombre);
+    }
+    
+    public List<Proveedor> leerTodo(){
+        return proveedorDao.leerTodo();
     }
 }

@@ -1,6 +1,7 @@
 package DAO;
 
 import Modelo.Proveedor;
+import java.util.List;
 
 public interface ProveedorDAO {
     void crear(Proveedor prov);
@@ -12,4 +13,6 @@ public interface ProveedorDAO {
     void eliminar(int id);
     
     Proveedor leerPorNombre(String nombre);
+    
+    List<Proveedor> leerTodo();
 }

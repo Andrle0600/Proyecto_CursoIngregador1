@@ -3,18 +3,20 @@ package Vista;
 import Controlador.ControladoraGeneral;
 import Modelo.Proveedor;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class RegistrarPedido extends javax.swing.JFrame {
 
     ControladoraGeneral control;
-    Proveedor prov;
+    List<Proveedor> proveedores;
 
     public RegistrarPedido() {
         initComponents();
         control = new ControladoraGeneral();
-        prov = new Proveedor();
+        proveedores = control.getControladoraProveedor().leerTodo();
+        cargarProveedores();
     }
 
     @SuppressWarnings("unchecked")
@@ -459,4 +461,11 @@ public class RegistrarPedido extends javax.swing.JFrame {
     private javax.swing.JPanel panelSideBar;
     private javax.swing.JPanel panelTitulo;
     // End of variables declaration//GEN-END:variables
+    
+    public void cargarProveedores(){
+        comboProveedor.removeAllItems();
+        for(Proveedor provedor:proveedores){
+            comboProveedor.addItem(provedor.getNombre());
+        }
+    }
 }
