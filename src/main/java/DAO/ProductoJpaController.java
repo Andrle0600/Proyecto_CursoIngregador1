@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -17,11 +18,11 @@ public class ProductoJpaController implements Serializable {
     public ProductoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    public ProductoJpaController(){
+
+    public ProductoJpaController() {
         emf = Persistence.createEntityManagerFactory("integradorPU");
     }
-    
+
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -131,5 +132,18 @@ public class ProductoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public Producto findByNombre(String nombre) {
+        EntityManager em = getEntityManager();
+        String query = "SELECT p FROM Producto p WHERE LOWER(p.nombre) = LOWER(:nombre)";
+        try {
+            return em.createQuery(query, Producto.class)
+                    .setParameter("nombre", nombre)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }
