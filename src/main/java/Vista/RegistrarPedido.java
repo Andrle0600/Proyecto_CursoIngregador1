@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.ControladoraGeneral;
+import Modelo.DetallePedido;
 import Modelo.Pedido;
 import Modelo.Proveedor;
 import java.awt.Color;
@@ -14,11 +15,13 @@ public class RegistrarPedido extends javax.swing.JFrame {
     ControladoraGeneral control;
     List<Proveedor> proveedores;
     Pedido ped;
+    DetallePedido detalle;
 
     public RegistrarPedido() {
         initComponents();
         control = new ControladoraGeneral();
         ped = new Pedido();
+        detalle = new DetallePedido();
         proveedores = control.getControladoraProveedor().leerTodo();
         cargarProveedores();
     }
@@ -403,15 +406,21 @@ public class RegistrarPedido extends javax.swing.JFrame {
 
     private void btnGenerarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPedidoActionPerformed
         //Obtener datos
-        Date fecha=fechaPedido.getDate();
-        String proveedor=(String) comboProveedor.getSelectedItem();
-        Proveedor provPedido=control.getControladoraProveedor().leerPorNombre(proveedor);
+        Date fecha = fechaPedido.getDate();
+        String proveedor = (String) comboProveedor.getSelectedItem();
+        Proveedor provPedido = control.getControladoraProveedor().leerPorNombre(proveedor);
         //Validar datos
-        
+
         //Establecer los valores
         ped.setFechaPedido(fecha);
+        ped.setProveedor(provPedido);
         control.getControladoraPedido().crearPedido(ped);
-        
+        detalle.setPedido(ped);
+        //Confimación para crear pedido
+        AgregarProductoPedido agregar=new AgregarProductoPedido(provPedido,this.ped);
+        agregar.setVisible(true);
+        agregar.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnGenerarPedidoActionPerformed
 
     private ImageIcon loadImage(String imageName) {
