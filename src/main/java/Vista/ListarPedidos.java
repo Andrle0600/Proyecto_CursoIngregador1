@@ -1,20 +1,28 @@
 package Vista;
 
 import Controlador.ControladoraGeneral;
+import Modelo.Pedido;
 import Modelo.Proveedor;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class ListarPedidos extends javax.swing.JFrame {
 
     ControladoraGeneral control;
     Proveedor prov;
+    List<Pedido> pedidos;
 
     public ListarPedidos() {
         initComponents();
         control = new ControladoraGeneral();
-        prov = new Proveedor();
+        cargarTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -36,7 +44,7 @@ public class ListarPedidos extends javax.swing.JFrame {
         btnDetalles = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtPedidos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Logística - Registrar Pedido");
@@ -178,7 +186,7 @@ public class ListarPedidos extends javax.swing.JFrame {
                 .addComponent(btnRegistarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
         );
@@ -217,8 +225,12 @@ public class ListarPedidos extends javax.swing.JFrame {
         });
 
         jPanel4.setBackground(new java.awt.Color(182, 127, 226));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtPedidos.setBackground(new java.awt.Color(202, 157, 255));
+        jtPedidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtPedidos.setForeground(new java.awt.Color(0, 0, 0));
+        jtPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -226,24 +238,21 @@ public class ListarPedidos extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Proveedor", "Fecha", "Total", "Estado"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jtPedidos.setAlignmentX(1.0F);
+        jScrollPane1.setViewportView(jtPedidos);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
@@ -261,7 +270,7 @@ public class ListarPedidos extends javax.swing.JFrame {
                     .addGroup(panelMainLayout.createSequentialGroup()
                         .addGap(182, 182, 182)
                         .addComponent(btnDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         panelMainLayout.setVerticalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,9 +279,9 @@ public class ListarPedidos extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8))
         );
@@ -285,7 +294,7 @@ public class ListarPedidos extends javax.swing.JFrame {
                 .addComponent(panelSideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 54, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,6 +402,48 @@ public class ListarPedidos extends javax.swing.JFrame {
 
         return (respuesta == JOptionPane.YES_OPTION);
     }
+
+    private void cargarTabla() {
+        pedidos = control.getControladoraPedido().leerTodo();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MMM-yyyy");
+
+        // Inicializa el modelo de la tabla y establece las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        String[] titulos = {"Proveedor", "Total", "Fecha", "Estado"};
+        modeloTabla.setColumnIdentifiers(titulos);
+        modeloTabla.setRowCount(0);
+
+        // Itera sobre los detalles y los agrega a la tabla
+        for (Pedido pedido : pedidos) {
+            Object[] obj = {
+                pedido.getProveedor().getNombre(),
+                formatoSoles(pedido.getTotal()),
+                formatoFecha.format(pedido.getFechaPedido()),
+                pedido.getEstado()
+            };
+            modeloTabla.addRow(obj);
+        }
+
+        jtPedidos.setModel(modeloTabla);
+
+        // Centra el texto en todas las celdas
+        DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
+        centrado.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Aplica el render centrado a cada columna
+        for (int i = 0; i < jtPedidos.getColumnCount(); i++) {
+            jtPedidos.getColumnModel().getColumn(i).setCellRenderer(centrado);
+        }
+    }
+
+    public String formatoSoles(double cantidad) {
+        return String.format("S/. %.2f", cantidad);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetalles;
     private javax.swing.JButton btnRegistarPedido;
@@ -406,7 +457,7 @@ public class ListarPedidos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtPedidos;
     private javax.swing.JPanel panelMain;
     private javax.swing.JPanel panelSideBar;
     private javax.swing.JPanel panelTitulo;
