@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.exceptions.NonexistentEntityException;
 import Modelo.DetallePedido;
+import Modelo.Pedido;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +46,11 @@ public class DetallePedidoDAOImpl implements DetallePedidoDAO{
     @Override
     public List<DetallePedido> leerTodo() {
         return detalleJpa.findDetallePedidoEntities();
+    }
+
+    @Override
+    public List<DetallePedido> leerPorPedido(Pedido pedido) {
+        return detalleJpa.findDetallesByPedidoId(pedido);
     }
     
 }

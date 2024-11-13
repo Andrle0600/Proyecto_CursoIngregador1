@@ -9,19 +9,20 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Modelo.Pedido;
 import Modelo.Producto;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
-
 
 public class DetallePedidoJpaController implements Serializable {
 
     public DetallePedidoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    public DetallePedidoJpaController(){
+
+    public DetallePedidoJpaController() {
         emf = Persistence.createEntityManagerFactory("integradorPU");
     }
     private EntityManagerFactory emf = null;
@@ -190,5 +191,19 @@ public class DetallePedidoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<DetallePedido> findDetallesByPedidoId(Pedido pedido) {
+        EntityManager em = getEntityManager();
+        String query = "SELECT d FROM DetallePedido d WHERE d.pedido = :pedido";
+        try {
+            return em.createQuery(query, DetallePedido.class)
+                    .setParameter("pedido", pedido)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

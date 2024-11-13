@@ -1,6 +1,7 @@
 package DAO;
 
 import Modelo.DetallePedido;
+import Modelo.Pedido;
 import java.util.List;
 
 public interface DetallePedidoDAO {
@@ -13,4 +14,6 @@ public interface DetallePedidoDAO {
     void eliminar(int id);
     
     List<DetallePedido> leerTodo();
+    
+    List<DetallePedido> leerPorPedido(Pedido pedido);
 }
