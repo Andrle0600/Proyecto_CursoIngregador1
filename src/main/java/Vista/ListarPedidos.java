@@ -2,10 +2,7 @@ package Vista;
 
 import Controlador.ControladoraGeneral;
 import Modelo.Pedido;
-import Modelo.Proveedor;
-import java.awt.Color;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -16,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListarPedidos extends javax.swing.JFrame {
 
     ControladoraGeneral control;
-    Proveedor prov;
+    Pedido pedido;
     List<Pedido> pedidos;
 
     public ListarPedidos() {
@@ -242,6 +239,7 @@ public class ListarPedidos extends javax.swing.JFrame {
             }
         ));
         jtPedidos.setAlignmentX(1.0F);
+        jtPedidos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jtPedidos);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -360,7 +358,18 @@ public class ListarPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDetallesMouseExited
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
-        // TODO add your handling code here:
+        if(jtPedidos.getRowCount()>0){
+            int filaSelect=jtPedidos.getSelectedRow();
+            if(filaSelect!=-1){
+                pedido=pedidos.get(filaSelect);
+                VerDetallePedido ver=new VerDetallePedido(pedido);
+                ver.setVisible(true);
+                ver.setLocationRelativeTo(null);
+                this.dispose();
+            }else{
+                mostrarMensaje("Seleccione una fila", "advertencia");
+            }
+        }
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private ImageIcon loadImage(String imageName) {
