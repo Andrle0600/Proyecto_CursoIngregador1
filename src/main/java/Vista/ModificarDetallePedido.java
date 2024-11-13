@@ -219,7 +219,7 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VerDetallesPedido ver = new VerDetallesPedido(ped);
+        ProductosPedido ver = new ProductosPedido(ped);
         ver.setVisible(true);
         ver.setLocationRelativeTo(null);
         this.dispose();
@@ -265,7 +265,7 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
             control.getControladoraDetallePedido().actualizarDetallePedido(detalle);
             //Confirmación del guardado
             mostrarMensaje("Datos del pedido actualizados exitosamente", "informacion");
-            VerDetallesPedido listar = new VerDetallesPedido(ped);
+            ProductosPedido listar = new ProductosPedido(ped);
             listar.setVisible(true);
             listar.setLocationRelativeTo(null);
             this.dispose();

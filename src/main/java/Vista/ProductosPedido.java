@@ -8,13 +8,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class VerDetallesPedido extends javax.swing.JFrame {
+public class ProductosPedido extends javax.swing.JFrame {
 
     ControladoraGeneral control;
     Pedido ped;
     List<DetallePedido> detalles;
 
-    public VerDetallesPedido(Pedido pedido) {
+    public ProductosPedido(Pedido pedido) {
         this.ped = pedido;
         initComponents();
         control = new ControladoraGeneral();

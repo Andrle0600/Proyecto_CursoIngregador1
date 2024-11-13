@@ -354,7 +354,7 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
 
     private void btnVerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidoActionPerformed
         Pedido pedido = control.getControladoraPedido().leerPedido(ped.getIdPedido());
-        VerDetallesPedido verDetalle = new VerDetallesPedido(pedido);
+        ProductosPedido verDetalle = new ProductosPedido(pedido);
         verDetalle.setVisible(true);
         verDetalle.setLocationRelativeTo(null);
         this.dispose();
@@ -389,7 +389,7 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
             }
         } else {
             mostrarMensaje("Valide los productos agregados", "advertencia");
-            VerDetallesPedido ver = new VerDetallesPedido(ped);
+            ProductosPedido ver = new ProductosPedido(ped);
             ver.setVisible(true);
             ver.setLocationRelativeTo(null);
             this.dispose();
