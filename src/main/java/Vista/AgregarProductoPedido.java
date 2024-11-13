@@ -6,6 +6,7 @@ import Modelo.Pedido;
 import Modelo.Producto;
 import Modelo.Proveedor;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class AgregarProductoPedido extends javax.swing.JFrame {
@@ -15,6 +16,7 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
     private List<Producto> productos;
     private DetallePedido detalle;
     private Pedido ped;
+    private List<DetallePedido> detalles;
 
     public AgregarProductoPedido(Proveedor provedor, Pedido pedido) {
         initComponents();
@@ -42,6 +44,7 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
         btnVerPedido = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +104,11 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
         spnCantidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         spnCantidad.setToolTipText("");
+        spnCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnCantidadStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -200,10 +208,40 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
             }
         });
 
+        btnVolver.setBackground(new java.awt.Color(102, 0, 102));
+        btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setIcon(loadImage("btn_volver.png"));
+        btnVolver.setText("Volver");
+        btnVolver.setBorderPainted(false);
+        btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVolver.setMaximumSize(new java.awt.Dimension(500, 300));
+        btnVolver.setMinimumSize(new java.awt.Dimension(80, 30));
+        btnVolver.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVolverMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnVolverMouseExited(evt);
+            }
+        });
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -216,14 +254,11 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
-                .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +275,9 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -269,8 +306,21 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
         //Recibir datos
         String producto = (String) comboProductos.getSelectedItem();
         Producto prodSelect = control.getControladoraProducto().leerPorNombre(producto);
-        int cantidad = (int) spnCantidad.getValue();
-        double precio = Double.parseDouble(txtPrecio.getText());
+        Object valor = spnCantidad.getValue();
+        int cantidad;
+        try {
+            // Verificar si el valor es un entero
+            if (valor instanceof Integer) {
+                cantidad = (int) valor; // Ya es un número entero, así que puedes asignarlo
+            } else {
+                throw new NumberFormatException("Valor no numérico");
+            }
+        } catch (NumberFormatException e) {
+            mostrarMensaje("No se permite el valor no numérico", "error");
+            return;
+        }
+        //calcular subtotal
+        double precio = prodSelect.getPrecioCompra();
         double subtotal = cantidad * precio;
         //confirmación
         boolean conf = confirmar("¿Desea agregar este producto al pedido?");
@@ -290,7 +340,7 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
             //Confirmar y reiniciar
             mostrarMensaje("Se agregado el producto al pedido", "informacion");
             spnCantidad.setValue(1);
-            txtPrecio.setText("");
+            cargarProductos();
         }
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
@@ -303,7 +353,7 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerPedidoMouseExited
 
     private void btnVerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidoActionPerformed
-        Pedido pedido=control.getControladoraPedido().leerPedido(ped.getIdPedido());
+        Pedido pedido = control.getControladoraPedido().leerPedido(ped.getIdPedido());
         VerDetallesPedido verDetalle = new VerDetallesPedido(pedido);
         verDetalle.setVisible(true);
         verDetalle.setLocationRelativeTo(null);
@@ -314,9 +364,51 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
         if (comboProductos.getSelectedIndex() > -1) {
             String producto = (String) comboProductos.getSelectedItem();
             Producto prodSelect = control.getControladoraProducto().leerPorNombre(producto);
-            txtPrecio.setText(String.valueOf(prodSelect.getPrecioCompra()));
+            txtPrecio.setText(formatoSoles(prodSelect.getPrecioCompra()));
         }
     }//GEN-LAST:event_comboProductosActionPerformed
+
+    private void btnVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseEntered
+        btnVolver.setBackground(new java.awt.Color(120, 0, 120));
+    }//GEN-LAST:event_btnVolverMouseEntered
+
+    private void btnVolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseExited
+        btnVolver.setBackground(new java.awt.Color(102, 0, 102));
+    }//GEN-LAST:event_btnVolverMouseExited
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        detalles = control.getControladoraDetallePedido().leerPorPedido(ped);
+        if (detalles.isEmpty()) {
+            boolean conf = confirmar("¿Desea cancelar el registro del pedido?");
+            if (conf) {
+                control.getControladoraPedido().eliminarPedido(ped.getIdPedido());
+                RegistrarPedido regist = new RegistrarPedido();
+                regist.setVisible(true);
+                regist.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        } else {
+            mostrarMensaje("Valide los productos agregados", "advertencia");
+            VerDetallesPedido ver = new VerDetallesPedido(ped);
+            ver.setVisible(true);
+            ver.setLocationRelativeTo(null);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void spnCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnCantidadStateChanged
+        Object valor = spnCantidad.getValue();
+
+        if (!(valor instanceof Integer)) {
+            // Si el valor no es un número entero, revertir al valor anterior
+            spnCantidad.setValue(1); // Restablece al valor mínimo
+            mostrarMensaje("Solo se permiten números enteros.", "advertencia");
+        }
+    }//GEN-LAST:event_spnCantidadStateChanged
+
+    public String formatoSoles(double cantidad) {
+        return String.format("S/. %.2f", cantidad);
+    }
 
     public boolean confirmar(String mensaje) {
         int respuesta = JOptionPane.showConfirmDialog(
@@ -349,9 +441,15 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, mensaje, "Mensaje", tipoMensaje);
     }
 
+    private ImageIcon loadImage(String imageName) {
+        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
+        return new ImageIcon(imagePath);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnVerPedido;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> comboProductos;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
