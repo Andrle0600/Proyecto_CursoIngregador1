@@ -231,7 +231,7 @@ public class ProductosPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProductoMouseExited
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        AgregarProductoPedido agregar=new AgregarProductoPedido(ped.getProveedor(), ped);
+        AgregarProductoPedido agregar=new AgregarProductoPedido(ped.getProveedor(), ped,1);
         agregar.setVisible(true);
         agregar.setLocationRelativeTo(null);
         this.dispose();
@@ -250,7 +250,7 @@ public class ProductosPedido extends javax.swing.JFrame {
             int filaSelect=jtDetalles.getSelectedRow();
             if(filaSelect!=-1){
                 DetallePedido detalleSelect=detalles.get(filaSelect);
-                ModificarDetallePedido modif=new ModificarDetallePedido(detalleSelect.getIdDetallePedido(), ped);
+                ModificarDetallePedido modif=new ModificarDetallePedido(detalleSelect.getIdDetallePedido(), ped,1);
                 modif.setVisible(true);
                 modif.setLocationRelativeTo(null);
                 this.dispose();

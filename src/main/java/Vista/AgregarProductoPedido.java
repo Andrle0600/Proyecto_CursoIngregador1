@@ -7,6 +7,7 @@ import Modelo.Producto;
 import Modelo.Proveedor;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class AgregarProductoPedido extends javax.swing.JFrame {
@@ -17,13 +18,15 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
     private DetallePedido detalle;
     private Pedido ped;
     private List<DetallePedido> detalles;
+    private int pantalla;
 
-    public AgregarProductoPedido(Proveedor provedor, Pedido pedido) {
+    public AgregarProductoPedido(Proveedor provedor, Pedido pedido, int pantalla) {
         initComponents();
         control = new ControladoraGeneral();
         detalle = new DetallePedido();
         this.ped = pedido;
         this.prov = provedor;
+        this.pantalla = pantalla;
         cargarProductos();
     }
 
@@ -354,7 +357,12 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
 
     private void btnVerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidoActionPerformed
         Pedido pedido = control.getControladoraPedido().leerPedido(ped.getIdPedido());
-        ProductosPedido verDetalle = new ProductosPedido(pedido);
+        JFrame verDetalle;
+        if (pantalla == 1) {
+            verDetalle = new ProductosPedido(pedido);
+        } else {
+            verDetalle = new VerDetallePedido(pedido);
+        }
         verDetalle.setVisible(true);
         verDetalle.setLocationRelativeTo(null);
         this.dispose();
@@ -377,23 +385,31 @@ public class AgregarProductoPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        detalles = control.getControladoraDetallePedido().leerPorPedido(ped);
-        if (detalles.isEmpty()) {
-            boolean conf = confirmar("¿Desea cancelar el registro del pedido?");
-            if (conf) {
-                control.getControladoraPedido().eliminarPedido(ped.getIdPedido());
-                RegistrarPedido regist = new RegistrarPedido();
-                regist.setVisible(true);
-                regist.setLocationRelativeTo(null);
+        if (pantalla == 1) {
+            detalles = control.getControladoraDetallePedido().leerPorPedido(ped);
+            if (detalles.isEmpty()) {
+                boolean conf = confirmar("¿Desea cancelar el registro del pedido?");
+                if (conf) {
+                    control.getControladoraPedido().eliminarPedido(ped.getIdPedido());
+                    RegistrarPedido regist = new RegistrarPedido();
+                    regist.setVisible(true);
+                    regist.setLocationRelativeTo(null);
+                    this.dispose();
+                }
+            } else {
+                mostrarMensaje("Valide los productos agregados", "advertencia");
+                ProductosPedido ver = new ProductosPedido(ped);
+                ver.setVisible(true);
+                ver.setLocationRelativeTo(null);
                 this.dispose();
             }
         } else {
-            mostrarMensaje("Valide los productos agregados", "advertencia");
-            ProductosPedido ver = new ProductosPedido(ped);
+            VerDetallePedido ver = new VerDetallePedido(ped);
             ver.setVisible(true);
             ver.setLocationRelativeTo(null);
             this.dispose();
         }
+
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void spnCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnCantidadStateChanged

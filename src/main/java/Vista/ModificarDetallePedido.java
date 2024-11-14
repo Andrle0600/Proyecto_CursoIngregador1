@@ -5,6 +5,7 @@ import Modelo.DetallePedido;
 import Modelo.Pedido;
 import Modelo.Producto;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class ModificarDetallePedido extends javax.swing.JFrame {
@@ -12,13 +13,15 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
     Pedido ped;
     DetallePedido detalle;
     ControladoraGeneral control;
-    int id;
+    private int id;
+    private int pantalla;
 
-    public ModificarDetallePedido(int id, Pedido pedido) {
+    public ModificarDetallePedido(int id, Pedido pedido, int pantalla) {
         initComponents();
         control = new ControladoraGeneral();
         this.ped = pedido;
-        this.id=id;
+        this.id = id;
+        this.pantalla = pantalla;
         detalle = control.getControladoraDetallePedido().leerDetallePedido(id);
         cargarDatos(id);
     }
@@ -219,7 +222,12 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        ProductosPedido ver = new ProductosPedido(ped);
+        JFrame ver;
+        if (pantalla == 1) {
+            ver = new ProductosPedido(ped);
+        } else {
+            ver = new VerDetallePedido(ped);
+        }
         ver.setVisible(true);
         ver.setLocationRelativeTo(null);
         this.dispose();
@@ -238,7 +246,7 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
         if (conf) {
             //Obtención de datos
             String prodSelect = txtProducto.getText();
-            Producto producto= control.getControladoraProducto().leerPorNombre(prodSelect);
+            Producto producto = control.getControladoraProducto().leerPorNombre(prodSelect);
             Object valor = spnCantidad.getValue();
             int cantidad;
             try {
@@ -252,11 +260,11 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
                 mostrarMensaje("No se permite el valor no numérico", "error");
                 return;
             }
-            double nSubtotal=cantidad*producto.getPrecioCompra();
+            double nSubtotal = cantidad * producto.getPrecioCompra();
             //actualizar total
-            double total=ped.getTotal();
-            double subtotal=detalle.getSubtotal();
-            double nTotal=total-subtotal+nSubtotal;
+            double total = ped.getTotal();
+            double subtotal = detalle.getSubtotal();
+            double nTotal = total - subtotal + nSubtotal;
             //guardar datos
             ped.setTotal(nTotal);
             control.getControladoraPedido().actualizarPedido(ped);
@@ -265,9 +273,14 @@ public class ModificarDetallePedido extends javax.swing.JFrame {
             control.getControladoraDetallePedido().actualizarDetallePedido(detalle);
             //Confirmación del guardado
             mostrarMensaje("Datos del pedido actualizados exitosamente", "informacion");
-            ProductosPedido listar = new ProductosPedido(ped);
-            listar.setVisible(true);
-            listar.setLocationRelativeTo(null);
+            JFrame ver;
+            if (pantalla == 1) {
+                ver = new ProductosPedido(ped);
+            } else {
+                ver = new VerDetallePedido(ped);
+            }
+            ver.setVisible(true);
+            ver.setLocationRelativeTo(null);
             this.dispose();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed

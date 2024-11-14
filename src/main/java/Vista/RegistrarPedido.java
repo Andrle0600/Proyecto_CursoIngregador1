@@ -417,7 +417,7 @@ public class RegistrarPedido extends javax.swing.JFrame {
         control.getControladoraPedido().crearPedido(ped);
         detalle.setPedido(ped);
         //Confimación para crear pedido
-        AgregarProductoPedido agregar=new AgregarProductoPedido(provPedido,this.ped);
+        AgregarProductoPedido agregar=new AgregarProductoPedido(provPedido,this.ped,1);
         agregar.setVisible(true);
         agregar.setLocationRelativeTo(null);
         this.dispose();
