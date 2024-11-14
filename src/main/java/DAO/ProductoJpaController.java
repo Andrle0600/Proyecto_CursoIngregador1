@@ -1,17 +1,22 @@
 package DAO;
 
 import DAO.exceptions.NonexistentEntityException;
-import Modelo.Producto;
 import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import Modelo.Categoria;
+import Modelo.Proveedor;
+import Modelo.Stock;
+import Modelo.DetallePedido;
+import Modelo.Producto;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 public class ProductoJpaController implements Serializable {
 
@@ -30,11 +35,61 @@ public class ProductoJpaController implements Serializable {
     }
 
     public void create(Producto producto) {
+        if (producto.getDetallesPedido() == null) {
+            producto.setDetallesPedido(new ArrayList<DetallePedido>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Categoria categoria = producto.getCategoria();
+            if (categoria != null) {
+                categoria = em.getReference(categoria.getClass(), categoria.getIdCategoria());
+                producto.setCategoria(categoria);
+            }
+            Proveedor proveedor = producto.getProveedor();
+            if (proveedor != null) {
+                proveedor = em.getReference(proveedor.getClass(), proveedor.getIdProveedor());
+                producto.setProveedor(proveedor);
+            }
+            Stock stock = producto.getStock();
+            if (stock != null) {
+                stock = em.getReference(stock.getClass(), stock.getIdStock());
+                producto.setStock(stock);
+            }
+            List<DetallePedido> attachedDetallesPedido = new ArrayList<DetallePedido>();
+            for (DetallePedido detallesPedidoDetallePedidoToAttach : producto.getDetallesPedido()) {
+                detallesPedidoDetallePedidoToAttach = em.getReference(detallesPedidoDetallePedidoToAttach.getClass(), detallesPedidoDetallePedidoToAttach.getIdDetallePedido());
+                attachedDetallesPedido.add(detallesPedidoDetallePedidoToAttach);
+            }
+            producto.setDetallesPedido(attachedDetallesPedido);
             em.persist(producto);
+            if (categoria != null) {
+                categoria.getProductos().add(producto);
+                categoria = em.merge(categoria);
+            }
+            if (proveedor != null) {
+                proveedor.getProductos().add(producto);
+                proveedor = em.merge(proveedor);
+            }
+            if (stock != null) {
+                Producto oldProductoOfStock = stock.getProducto();
+                if (oldProductoOfStock != null) {
+                    oldProductoOfStock.setStock(null);
+                    oldProductoOfStock = em.merge(oldProductoOfStock);
+                }
+                stock.setProducto(producto);
+                stock = em.merge(stock);
+            }
+            for (DetallePedido detallesPedidoDetallePedido : producto.getDetallesPedido()) {
+                Producto oldProductoOfDetallesPedidoDetallePedido = detallesPedidoDetallePedido.getProducto();
+                detallesPedidoDetallePedido.setProducto(producto);
+                detallesPedidoDetallePedido = em.merge(detallesPedidoDetallePedido);
+                if (oldProductoOfDetallesPedidoDetallePedido != null) {
+                    oldProductoOfDetallesPedidoDetallePedido.getDetallesPedido().remove(detallesPedidoDetallePedido);
+                    oldProductoOfDetallesPedidoDetallePedido = em.merge(oldProductoOfDetallesPedidoDetallePedido);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -48,7 +103,81 @@ public class ProductoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Producto persistentProducto = em.find(Producto.class, producto.getIdProducto());
+            Categoria categoriaOld = persistentProducto.getCategoria();
+            Categoria categoriaNew = producto.getCategoria();
+            Proveedor proveedorOld = persistentProducto.getProveedor();
+            Proveedor proveedorNew = producto.getProveedor();
+            Stock stockOld = persistentProducto.getStock();
+            Stock stockNew = producto.getStock();
+            List<DetallePedido> detallesPedidoOld = persistentProducto.getDetallesPedido();
+            List<DetallePedido> detallesPedidoNew = producto.getDetallesPedido();
+            if (categoriaNew != null) {
+                categoriaNew = em.getReference(categoriaNew.getClass(), categoriaNew.getIdCategoria());
+                producto.setCategoria(categoriaNew);
+            }
+            if (proveedorNew != null) {
+                proveedorNew = em.getReference(proveedorNew.getClass(), proveedorNew.getIdProveedor());
+                producto.setProveedor(proveedorNew);
+            }
+            if (stockNew != null) {
+                stockNew = em.getReference(stockNew.getClass(), stockNew.getIdStock());
+                producto.setStock(stockNew);
+            }
+            List<DetallePedido> attachedDetallesPedidoNew = new ArrayList<DetallePedido>();
+            for (DetallePedido detallesPedidoNewDetallePedidoToAttach : detallesPedidoNew) {
+                detallesPedidoNewDetallePedidoToAttach = em.getReference(detallesPedidoNewDetallePedidoToAttach.getClass(), detallesPedidoNewDetallePedidoToAttach.getIdDetallePedido());
+                attachedDetallesPedidoNew.add(detallesPedidoNewDetallePedidoToAttach);
+            }
+            detallesPedidoNew = attachedDetallesPedidoNew;
+            producto.setDetallesPedido(detallesPedidoNew);
             producto = em.merge(producto);
+            if (categoriaOld != null && !categoriaOld.equals(categoriaNew)) {
+                categoriaOld.getProductos().remove(producto);
+                categoriaOld = em.merge(categoriaOld);
+            }
+            if (categoriaNew != null && !categoriaNew.equals(categoriaOld)) {
+                categoriaNew.getProductos().add(producto);
+                categoriaNew = em.merge(categoriaNew);
+            }
+            if (proveedorOld != null && !proveedorOld.equals(proveedorNew)) {
+                proveedorOld.getProductos().remove(producto);
+                proveedorOld = em.merge(proveedorOld);
+            }
+            if (proveedorNew != null && !proveedorNew.equals(proveedorOld)) {
+                proveedorNew.getProductos().add(producto);
+                proveedorNew = em.merge(proveedorNew);
+            }
+            if (stockOld != null && !stockOld.equals(stockNew)) {
+                stockOld.setProducto(null);
+                stockOld = em.merge(stockOld);
+            }
+            if (stockNew != null && !stockNew.equals(stockOld)) {
+                Producto oldProductoOfStock = stockNew.getProducto();
+                if (oldProductoOfStock != null) {
+                    oldProductoOfStock.setStock(null);
+                    oldProductoOfStock = em.merge(oldProductoOfStock);
+                }
+                stockNew.setProducto(producto);
+                stockNew = em.merge(stockNew);
+            }
+            for (DetallePedido detallesPedidoOldDetallePedido : detallesPedidoOld) {
+                if (!detallesPedidoNew.contains(detallesPedidoOldDetallePedido)) {
+                    detallesPedidoOldDetallePedido.setProducto(null);
+                    detallesPedidoOldDetallePedido = em.merge(detallesPedidoOldDetallePedido);
+                }
+            }
+            for (DetallePedido detallesPedidoNewDetallePedido : detallesPedidoNew) {
+                if (!detallesPedidoOld.contains(detallesPedidoNewDetallePedido)) {
+                    Producto oldProductoOfDetallesPedidoNewDetallePedido = detallesPedidoNewDetallePedido.getProducto();
+                    detallesPedidoNewDetallePedido.setProducto(producto);
+                    detallesPedidoNewDetallePedido = em.merge(detallesPedidoNewDetallePedido);
+                    if (oldProductoOfDetallesPedidoNewDetallePedido != null && !oldProductoOfDetallesPedidoNewDetallePedido.equals(producto)) {
+                        oldProductoOfDetallesPedidoNewDetallePedido.getDetallesPedido().remove(detallesPedidoNewDetallePedido);
+                        oldProductoOfDetallesPedidoNewDetallePedido = em.merge(oldProductoOfDetallesPedidoNewDetallePedido);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -77,6 +206,26 @@ public class ProductoJpaController implements Serializable {
                 producto.getIdProducto();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The producto with id " + id + " no longer exists.", enfe);
+            }
+            Categoria categoria = producto.getCategoria();
+            if (categoria != null) {
+                categoria.getProductos().remove(producto);
+                categoria = em.merge(categoria);
+            }
+            Proveedor proveedor = producto.getProveedor();
+            if (proveedor != null) {
+                proveedor.getProductos().remove(producto);
+                proveedor = em.merge(proveedor);
+            }
+            Stock stock = producto.getStock();
+            if (stock != null) {
+                stock.setProducto(null);
+                stock = em.merge(stock);
+            }
+            List<DetallePedido> detallesPedido = producto.getDetallesPedido();
+            for (DetallePedido detallesPedidoDetallePedido : detallesPedido) {
+                detallesPedidoDetallePedido.setProducto(null);
+                detallesPedidoDetallePedido = em.merge(detallesPedidoDetallePedido);
             }
             em.remove(producto);
             em.getTransaction().commit();
@@ -146,4 +295,5 @@ public class ProductoJpaController implements Serializable {
             em.close();
         }
     }
+
 }
