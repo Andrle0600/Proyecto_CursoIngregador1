@@ -4,10 +4,12 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Modelo.Categoria</class>
     <class>Modelo.DetallePedido</class>
+    <class>Modelo.DetalleVenta</class>
     <class>Modelo.Pedido</class>
     <class>Modelo.Producto</class>
     <class>Modelo.Proveedor</class>
     <class>Modelo.Stock</class>
+    <class>Modelo.Venta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bdesdiel?serverTimezome=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
