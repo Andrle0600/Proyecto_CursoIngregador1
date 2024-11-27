@@ -2,9 +2,9 @@ package Vista;
 
 import javax.swing.ImageIcon;
 
-public class PantallaPrincipal extends javax.swing.JFrame {
+public class PantallaPrincipalUsuario extends javax.swing.JFrame {
 
-    public PantallaPrincipal() {
+    public PantallaPrincipalUsuario() {
         initComponents();
     }
 
