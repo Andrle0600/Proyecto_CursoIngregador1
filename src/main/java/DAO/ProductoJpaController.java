@@ -295,5 +295,19 @@ public class ProductoJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Producto findByCodigo(String codigo) {
+        EntityManager em = getEntityManager();
+        String query = "SELECT p FROM Producto p WHERE UPPER(p.codigo) = UPPER(:codigo)";
+        try {
+            return em.createQuery(query, Producto.class)
+                    .setParameter("codigo", codigo)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 
 }

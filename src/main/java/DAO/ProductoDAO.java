@@ -13,6 +13,8 @@ public interface ProductoDAO {
     void eliminar(int id);
     
     Producto leerPorNombre(String nombre);
+    
+    Producto leerPorCodigo(String codigo);
    
     List<Producto> leerTodo();
 }

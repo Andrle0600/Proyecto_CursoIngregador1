@@ -35,4 +35,8 @@ public class ControladoraProducto {
     public Producto leerPorNombre(String nombre){
         return productoDao.leerPorNombre(nombre);
     }
+    
+    public Producto leerPorCodigo(String codigo){
+        return productoDao.leerPorCodigo(codigo);
+    }
 }

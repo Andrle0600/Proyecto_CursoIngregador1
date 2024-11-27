@@ -51,5 +51,10 @@ public class ProductoDAOImpl implements ProductoDAO{
     public Producto leerPorNombre(String nombre) {
         return productoJpa.findByNombre(nombre);
     }
+
+    @Override
+    public Producto leerPorCodigo(String codigo) {
+        return productoJpa.findByCodigo(codigo);
+    }
     
 }
