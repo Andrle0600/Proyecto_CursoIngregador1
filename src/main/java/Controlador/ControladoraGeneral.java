@@ -5,15 +5,17 @@ public class ControladoraGeneral {
     private ControladoraProveedor controlProveedor;
     private ControladoraPedido controlPedido;
     private ControladoraProducto controlProducto;
-    private ControladoraDetallePedido controlDetalle;
+    private ControladoraDetallePedido controlDetallePedido;
     private ControladoraStock controlStock;
+    private ControladoraVenta controlVenta;
 
     public ControladoraGeneral() {
         this.controlProveedor = new ControladoraProveedor();
         this.controlPedido = new ControladoraPedido();
         this.controlProducto = new ControladoraProducto();
-        this.controlDetalle = new ControladoraDetallePedido();
+        this.controlDetallePedido = new ControladoraDetallePedido();
         this.controlStock = new ControladoraStock();
+        this.controlVenta = new ControladoraVenta();
     }
 
     // Métodos para obtener las controladoras específicas
@@ -30,10 +32,15 @@ public class ControladoraGeneral {
     }
 
     public ControladoraDetallePedido getControladoraDetallePedido() {
-        return controlDetalle;
+        return controlDetallePedido;
     }
-    
-    public ControladoraStock getControladoraStock(){
+
+    public ControladoraStock getControladoraStock() {
         return controlStock;
     }
+
+    public ControladoraVenta getControladoraVenta() {
+        return controlVenta;
+    }
+
 }
