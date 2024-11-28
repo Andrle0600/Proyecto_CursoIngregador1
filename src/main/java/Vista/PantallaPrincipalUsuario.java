@@ -223,7 +223,7 @@ public class PantallaPrincipalUsuario extends javax.swing.JFrame {
             venta.setFechaVenta(fecha);
             venta.setCliente("");
             control.getControladoraVenta().crearVenta(venta);
-            RegistroVenta reg = new RegistroVenta(venta);
+            RegistroVenta reg = new RegistroVenta(venta,2);
             reg.setVisible(true);
             reg.setLocationRelativeTo(null);
             this.dispose();

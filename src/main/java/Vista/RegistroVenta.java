@@ -19,13 +19,15 @@ public class RegistroVenta extends javax.swing.JFrame {
     Producto producto;
     List<DetalleVenta> detalles;
     DetalleVenta detalle;
+    int pantalla;
 
-    public RegistroVenta(Venta venta) {
+    public RegistroVenta(Venta venta, int pantalla) {
         initComponents();
         cargarFecha();
         this.control = new ControladoraGeneral();
         this.detalle = new DetalleVenta();
         this.venta = venta;
+        this.pantalla = pantalla;
         setTextoInformacion();
         cargarTotal();
     }
@@ -391,11 +393,17 @@ public class RegistroVenta extends javax.swing.JFrame {
         if (detalles.isEmpty()) {
             boolean conf = confirmar("¿Desea cancelar el registro de la venta?");
             if (conf) {
-                GestionVentas ventas = new GestionVentas();
-                ventas.setVisible(true);
-                ventas.setLocationRelativeTo(null);
-                control.getControladoraVenta().eliminarVenta(venta.getIdVenta());
-                this.dispose();
+                if (pantalla == 1) {
+                    GestionVentas ventas = new GestionVentas();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }else{
+                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }
             }
         } else {
             mostrarMensaje("Finalice o cancele la venta", "adventencia");
@@ -413,7 +421,7 @@ public class RegistroVenta extends javax.swing.JFrame {
             double precioVenta = precioCompra * (1 + ganancia);
             //Establecer en los campos
             txtNombreProducto.setText(nombre);
-            txtPrecio.setText(formatoSoles(precioVenta,true));
+            txtPrecio.setText(formatoSoles(precioVenta, true));
         }
     }//GEN-LAST:event_txtCodigoKeyPressed
 
@@ -430,18 +438,24 @@ public class RegistroVenta extends javax.swing.JFrame {
                 }
                 venta.setCliente(cliente);
                 control.getControladoraVenta().actualizarVenta(venta);
-                for(DetalleVenta det:detalles){
-                    int cantActual=det.getProducto().getStock().getCantidad();
-                    int nuevo=cantActual-detalle.getCantidad();
-                    Stock stock=det.getProducto().getStock();
+                for (DetalleVenta det : detalles) {
+                    int cantActual = det.getProducto().getStock().getCantidad();
+                    int nuevo = cantActual - detalle.getCantidad();
+                    Stock stock = det.getProducto().getStock();
                     stock.setCantidad(nuevo);
                     control.getControladoraStock().actualizarStock(stock);
                 }
-                mostrarMensaje("Venta guardada exitosamente", "informacion");
-                GestionVentas ventas = new GestionVentas();
-                ventas.setVisible(true);
-                ventas.setLocationRelativeTo(null);
-                this.dispose();
+                if (pantalla == 1) {
+                    GestionVentas ventas = new GestionVentas();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }else{
+                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }
             }
         }
     }//GEN-LAST:event_btnFinalizarCompraActionPerformed
@@ -449,11 +463,17 @@ public class RegistroVenta extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         detalles = control.getControladoraDetalleVenta().leerPorVenta(venta);
         if (detalles.isEmpty()) {
-            GestionVentas ventas = new GestionVentas();
-            ventas.setVisible(true);
-            ventas.setLocationRelativeTo(null);
-            control.getControladoraVenta().eliminarVenta(venta.getIdVenta());
-            this.dispose();
+            if (pantalla == 1) {
+                    GestionVentas ventas = new GestionVentas();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }else{
+                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }
         } else {
             boolean conf = confirmar("Se eliminará la venta completa, ¿Desea continuar?");
             if (conf) {
@@ -462,10 +482,17 @@ public class RegistroVenta extends javax.swing.JFrame {
                     control.getControladoraDetalleVenta().eliminarDetalleVenta(det.getIdDetalleVenta());
                 }
                 control.getControladoraVenta().eliminarVenta(venta.getIdVenta());
-                GestionVentas ventas = new GestionVentas();
-                ventas.setVisible(true);
-                ventas.setLocationRelativeTo(null);
-                this.dispose();
+                if (pantalla == 1) {
+                    GestionVentas ventas = new GestionVentas();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }else{
+                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                    ventas.setVisible(true);
+                    ventas.setLocationRelativeTo(null);
+                    this.dispose();
+                }
             }
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -528,8 +555,8 @@ public class RegistroVenta extends javax.swing.JFrame {
             double cambio = efectivo - total;
             if (cambio > 0) {
                 //Establecer en los campos
-                txtEfectivo.setText(formatoSoles(efectivo,false));
-                txtCambio.setText(formatoSoles(cambio,false));
+                txtEfectivo.setText(formatoSoles(efectivo, false));
+                txtCambio.setText(formatoSoles(cambio, false));
             } else {
                 mostrarMensaje("Efectivo insuficiente", "error");
                 txtEfectivo.setText("");
@@ -660,7 +687,7 @@ public class RegistroVenta extends javax.swing.JFrame {
 
     private void cargarTotal() {
         double total = venta.getTotal();
-        txtTotal.setText(formatoSoles(total,false));
+        txtTotal.setText(formatoSoles(total, false));
     }
 
     private void setTextoInformacion() {
@@ -670,7 +697,7 @@ public class RegistroVenta extends javax.swing.JFrame {
     private void añadirInformacion(Producto producto, int cantidad, double precio) {
         String nuevoProducto = txtInformacion.getText() + "\n"
                 + producto.getCodigo() + " " + producto.getNombre() + "\n"
-                + "\t\t" + cantidad + "x\t" + precio + "\t" + formatoSoles(cantidad * precio,false);
+                + "\t\t" + cantidad + "x\t" + precio + "\t" + formatoSoles(cantidad * precio, false);
         txtInformacion.setText(nuevoProducto);
     }
 }

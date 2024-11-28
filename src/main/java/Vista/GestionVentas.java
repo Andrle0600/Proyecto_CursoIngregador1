@@ -138,7 +138,7 @@ public class GestionVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentasUltimoMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasUltimoMesActionPerformed
-        VentaMensual igu = new VentaMensual();
+        FiltrarFecha igu=new FiltrarFecha();
         igu.setVisible(true);
         igu.setLocationRelativeTo(null);
         this.dispose();
@@ -156,7 +156,7 @@ public class GestionVentas extends javax.swing.JFrame {
             venta.setFechaVenta(fecha);
             venta.setCliente("");
             control.getControladoraVenta().crearVenta(venta);
-            RegistroVenta reg = new RegistroVenta(venta);
+            RegistroVenta reg = new RegistroVenta(venta, 1);
             reg.setVisible(true);
             reg.setLocationRelativeTo(null);
             this.dispose();
