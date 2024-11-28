@@ -34,6 +34,9 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "producto")
     List<DetallePedido> detallesPedido;
     
+    @OneToMany(mappedBy = "producto")
+    List<DetalleVenta> detallesVenta;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="stock_id")
     private Stock stock;
@@ -105,5 +108,12 @@ public class Producto implements Serializable {
         this.stock = stock;
     }
 
+    public List<DetalleVenta> getDetallesVenta() {
+        return detallesVenta;
+    }
+
+    public void setDetallesVenta(List<DetalleVenta> detallesVenta) {
+        this.detallesVenta = detallesVenta;
+    }
     
 }
