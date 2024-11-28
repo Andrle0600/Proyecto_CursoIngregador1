@@ -3,6 +3,7 @@ package Vista;
 import Controlador.ControladoraGeneral;
 import Modelo.DetalleVenta;
 import Modelo.Producto;
+import Modelo.Stock;
 import Modelo.Venta;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -429,6 +430,13 @@ public class RegistroVenta extends javax.swing.JFrame {
                 }
                 venta.setCliente(cliente);
                 control.getControladoraVenta().actualizarVenta(venta);
+                for(DetalleVenta det:detalles){
+                    int cantActual=det.getProducto().getStock().getCantidad();
+                    int nuevo=cantActual-detalle.getCantidad();
+                    Stock stock=det.getProducto().getStock();
+                    stock.setCantidad(nuevo);
+                    control.getControladoraStock().actualizarStock(stock);
+                }
                 mostrarMensaje("Venta guardada exitosamente", "informacion");
                 GestionVentas ventas = new GestionVentas();
                 ventas.setVisible(true);
