@@ -1,11 +1,26 @@
 package Vista;
 
+import Controlador.ControladoraGeneral;
+import Modelo.Venta;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class GestionVentas extends javax.swing.JFrame {
 
+    Venta venta;
+    ControladoraGeneral control;
+
     public GestionVentas() {
         initComponents();
+        this.control = new ControladoraGeneral();
+        this.venta=new Venta();
     }
 
     @SuppressWarnings("unchecked")
@@ -98,7 +113,7 @@ public class GestionVentas extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(54, 54, 54)
-                .addComponent(btnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addGap(47, 47, 47)
                 .addComponent(btnVentasUltimoMes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67)
@@ -123,17 +138,29 @@ public class GestionVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentasUltimoMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasUltimoMesActionPerformed
-        VentaMensual venta = new VentaMensual();
-        venta.setVisible(true);
-        venta.setLocationRelativeTo(null);
+        VentaMensual igu = new VentaMensual();
+        igu.setVisible(true);
+        igu.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnVentasUltimoMesActionPerformed
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
-        RegistroVenta reg = new RegistroVenta();
-        reg.setVisible(true);
-        reg.setLocationRelativeTo(null);
-        this.dispose();
+        boolean conf = confirmar("¿Desea registrar una venta?");
+        if (conf) {
+            Date fecha = null;
+            try {
+                fecha=obtenerFecha();
+            } catch (ParseException ex) {
+                Logger.getLogger(GestionVentas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            venta.setFechaVenta(fecha);
+            venta.setCliente("");
+            control.getControladoraVenta().crearVenta(venta);
+            RegistroVenta reg = new RegistroVenta(venta);
+            reg.setVisible(true);
+            reg.setLocationRelativeTo(null);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void btnVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseEntered
@@ -145,7 +172,7 @@ public class GestionVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        PantallaPrincipal pant=new PantallaPrincipal();
+        PantallaPrincipal pant = new PantallaPrincipal();
         pant.setVisible(true);
         pant.setLocationRelativeTo(null);
         this.dispose();
@@ -154,6 +181,31 @@ public class GestionVentas extends javax.swing.JFrame {
     private ImageIcon loadImage(String imageName) {
         String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
         return new ImageIcon(imagePath);
+    }
+
+    public boolean confirmar(String mensaje) {
+        int respuesta = JOptionPane.showConfirmDialog(
+                null,
+                mensaje,
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        return (respuesta == JOptionPane.YES_OPTION);
+    }
+
+    private Date obtenerFecha() throws ParseException {
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+
+        // Formatear la fecha como una cadena en el formato "dd/MM/yyyy"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaFormateada = fechaActual.format(formatter);
+
+        // Convertir la cadena formateada a un objeto Date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Manejar la excepción en caso de un error inesperado
+        return sdf.parse(fechaFormateada);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
