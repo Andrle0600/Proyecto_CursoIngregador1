@@ -3,6 +3,7 @@ package Controlador;
 import DAO.VentaDAO;
 import DAO.VentaDAOImpl;
 import Modelo.Venta;
+import java.util.Date;
 import java.util.List;
 
 public class ControladoraVenta {
@@ -30,6 +31,10 @@ public class ControladoraVenta {
 
     public List<Venta> leerTodo(){
         return ventaDao.leerTodo();
+    }
+    
+    public List<Venta> leerPorFechas(Date inicio, Date fin){
+        return ventaDao.leerPorFechas(inicio, fin);
     }
     
 }

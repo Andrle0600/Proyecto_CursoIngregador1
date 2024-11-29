@@ -9,6 +9,7 @@ import javax.persistence.criteria.Root;
 import Modelo.DetalleVenta;
 import Modelo.Venta;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -69,7 +70,7 @@ public class VentaJpaController implements Serializable {
     }
 
     public void destroy(int id) throws NonexistentEntityException {
-       EntityManager em = null;
+        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -120,7 +121,7 @@ public class VentaJpaController implements Serializable {
 
         try {
             return em.find(Venta.class,
-                     id);
+                    id);
         } finally {
             em.close();
         }
@@ -135,6 +136,18 @@ public class VentaJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Venta> findVentasByDateRange(Date fechaInicio, Date fechaFin) {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createQuery("SELECT v FROM Venta v WHERE v.fechaVenta BETWEEN :fechaInicio AND :fechaFin", Venta.class);
+            query.setParameter("fechaInicio", fechaInicio);
+            query.setParameter("fechaFin", fechaFin);
+            return query.getResultList();
         } finally {
             em.close();
         }

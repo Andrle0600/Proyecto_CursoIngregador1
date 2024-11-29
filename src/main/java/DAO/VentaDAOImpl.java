@@ -2,6 +2,7 @@ package DAO;
 
 import DAO.exceptions.NonexistentEntityException;
 import Modelo.Venta;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +46,11 @@ public class VentaDAOImpl implements VentaDAO {
     @Override
     public List<Venta> leerTodo() {
         return ventajpa.findVentaEntities();
+    }
+
+    @Override
+    public List<Venta> leerPorFechas(Date inicio, Date fin) {
+        return ventajpa.findVentasByDateRange(inicio, fin);
     }
 
 }
