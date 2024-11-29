@@ -16,15 +16,15 @@ public class ControladoraCategoria {
         categoriaDao.crear(categoria);
     }
     
-    public Categoria leerDetallePedido(int id){
+    public Categoria leerCategoria(int id){
         return categoriaDao.leer(id);
     }
     
-    public void actualizarDetallePedido(Categoria categoria){
+    public void actualizarCategoria(Categoria categoria){
         categoriaDao.actualizar(categoria);
     }
     
-    public void eliminarDetallePedido(int id){
+    public void eliminarCategoria(int id){
         categoriaDao.eliminar(id);
     }
     
