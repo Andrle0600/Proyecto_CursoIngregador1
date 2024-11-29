@@ -394,6 +394,10 @@ public class RegistroVenta extends javax.swing.JFrame {
         if (detalles.isEmpty()) {
             boolean conf = confirmar("¿Desea cancelar el registro de la venta?");
             if (conf) {
+                for (DetalleVenta det : detalles) {
+                    control.getControladoraDetalleVenta().eliminarDetalleVenta(det.getIdDetalleVenta());
+                }
+                control.getControladoraVenta().eliminarVenta(venta.getIdVenta());
                 if (pantalla == 1) {
                     GestionVentas ventas = new GestionVentas();
                     ventas.setVisible(true);
@@ -406,6 +410,7 @@ public class RegistroVenta extends javax.swing.JFrame {
                     this.dispose();
                 }
             }
+            
         } else {
             mostrarMensaje("Finalice o cancele la venta", "adventencia");
         }
