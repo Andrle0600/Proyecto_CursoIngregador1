@@ -233,7 +233,10 @@ public class PantallaPrincipalUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
-
+        ConfiguracionesUsuario reg = new ConfiguracionesUsuario();
+        reg.setVisible(true);
+        reg.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     private ImageIcon loadImage(String imageName) {

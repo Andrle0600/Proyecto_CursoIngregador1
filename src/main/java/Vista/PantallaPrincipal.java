@@ -1,6 +1,8 @@
 package Vista;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class PantallaPrincipal extends javax.swing.JFrame {
 
@@ -222,35 +224,39 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-        GestionInventario invent=new  GestionInventario();
+        GestionInventario invent = new GestionInventario();
         invent.setVisible(true);
         invent.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Login login=new Login();
-        login.setVisible(true);
-        login.setLocationRelativeTo(null);
-        this.dispose();
+        boolean conf = confirmar("¿Desea cerrar sesión?");
+        if (conf) {
+            Login login = new Login();
+            login.setVisible(true);
+            login.setLocationRelativeTo(null);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        GestionVentas ventas=new GestionVentas();
+        GestionVentas ventas = new GestionVentas();
         ventas.setVisible(true);
         ventas.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogisticaActionPerformed
-        GestionLogistica logis=new GestionLogistica();
+        GestionLogistica logis = new GestionLogistica();
         logis.setVisible(true);
         logis.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnLogisticaActionPerformed
 
     private void btnConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracionActionPerformed
-
+        OtrasConfiguraciones igu = new OtrasConfiguraciones();
+        abrirVentana(igu);
     }//GEN-LAST:event_btnConfiguracionActionPerformed
 
     private ImageIcon loadImage(String imageName) {
@@ -258,6 +264,23 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         return new ImageIcon(imagePath);
     }
 
+    private void abrirVentana(JFrame jframe) {
+        jframe.setVisible(true);
+        jframe.setLocationRelativeTo(null);
+        this.dispose();
+    }
+
+    public boolean confirmar(String mensaje) {
+        int respuesta = JOptionPane.showConfirmDialog(
+                null,
+                mensaje,
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        return (respuesta == JOptionPane.YES_OPTION);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnConfiguracion;
