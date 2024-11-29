@@ -1,12 +1,20 @@
 package Vista;
 
+import Controlador.ControladoraGeneral;
+import Modelo.Categoria;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class RegistrarCategoria extends javax.swing.JFrame {
 
+    ControladoraGeneral control;
+    Categoria categoria;
+    
     public RegistrarCategoria() {
         initComponents();
+        control=new ControladoraGeneral();
+        categoria=new Categoria();
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +82,11 @@ public class RegistrarCategoria extends javax.swing.JFrame {
         btnVerTodo.setForeground(new java.awt.Color(0, 0, 0));
         btnVerTodo.setText("VER TODO");
         btnVerTodo.setBorder(null);
+        btnVerTodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerTodoActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(155, 89, 182));
 
@@ -267,7 +280,23 @@ public class RegistrarCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtNombre.getText();
+        String textoGanancia = txtGanancia.getText();
+        if (nombre.equals("") || textoGanancia.equals("")) {
+            mostrarMensaje("Ambos campos son obligatorios", "advertencia");
+            return;
+        }
+        if(!esNumeroDecimal(textoGanancia)){
+            mostrarMensaje("No es un número.\nEl decimal debe ser con punto.\nEjm: 0.7", "error");
+            limpiar();
+            return;
+        }
+        double ganancia=Double.parseDouble(textoGanancia);
+        categoria.setGanancia(ganancia);
+        categoria.setNombre(nombre);
+        control.getControladoraCategoria().crearCategoria(categoria);
+        mostrarMensaje("Categoria creada correctamente", "informacion");
+        limpiar();        
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void btnVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseEntered
@@ -279,26 +308,64 @@ public class RegistrarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        PantallaPrincipal log=new PantallaPrincipal();
+        PantallaPrincipal log = new PantallaPrincipal();
         abrirVentana(log);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnOtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOtrosActionPerformed
-        OtrasConfiguraciones log=new OtrasConfiguraciones();
+        OtrasConfiguraciones log = new OtrasConfiguraciones();
         log.setVisible(true);
         log.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnOtrosActionPerformed
 
+    private void btnVerTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodoActionPerformed
+        VerCategorias ver=new VerCategorias();
+        abrirVentana(ver);
+    }//GEN-LAST:event_btnVerTodoActionPerformed
+
     private ImageIcon loadImage(String imageName) {
         String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
         return new ImageIcon(imagePath);
     }
-    
+
     private void abrirVentana(JFrame jframe) {
         jframe.setVisible(true);
         jframe.setLocationRelativeTo(null);
         this.dispose();
+    }
+
+    private boolean esNumeroDecimal(String texto) {
+        try {
+            Double.parseDouble(texto);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static void mostrarMensaje(String mensaje, String tipo) {
+        int tipoMensaje;
+
+        tipoMensaje = switch (tipo.toLowerCase()) {
+            case "error" ->
+                JOptionPane.ERROR_MESSAGE;
+            case "informacion" ->
+                JOptionPane.INFORMATION_MESSAGE;
+            case "advertencia" ->
+                JOptionPane.WARNING_MESSAGE;
+            case "pregunta" ->
+                JOptionPane.QUESTION_MESSAGE;
+            default ->
+                JOptionPane.PLAIN_MESSAGE;
+        };
+
+        JOptionPane.showMessageDialog(null, mensaje, "Mensaje", tipoMensaje);
+    }
+    
+    private void limpiar(){
+        txtNombre.setText("");
+        txtGanancia.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
