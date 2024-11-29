@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.ControladoraGeneral;
+import Modelo.Categoria;
 import Modelo.DetalleVenta;
 import Modelo.Producto;
 import Modelo.Stock;
@@ -398,8 +399,8 @@ public class RegistroVenta extends javax.swing.JFrame {
                     ventas.setVisible(true);
                     ventas.setLocationRelativeTo(null);
                     this.dispose();
-                }else{
-                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                } else {
+                    PantallaPrincipalUsuario ventas = new PantallaPrincipalUsuario();
                     ventas.setVisible(true);
                     ventas.setLocationRelativeTo(null);
                     this.dispose();
@@ -417,7 +418,11 @@ public class RegistroVenta extends javax.swing.JFrame {
             //Obteniendo nombre y calculando precio
             String nombre = producto.getNombre();
             double precioCompra = producto.getPrecioCompra();
-            double ganancia = producto.getCategoria().getGanancia();
+            Categoria categoria = producto.getCategoria();
+            double ganancia = 0;
+            if (categoria != null) {
+                ganancia = producto.getCategoria().getGanancia();
+            }
             double precioVenta = precioCompra * (1 + ganancia);
             //Establecer en los campos
             txtNombreProducto.setText(nombre);
@@ -450,8 +455,8 @@ public class RegistroVenta extends javax.swing.JFrame {
                     ventas.setVisible(true);
                     ventas.setLocationRelativeTo(null);
                     this.dispose();
-                }else{
-                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                } else {
+                    PantallaPrincipalUsuario ventas = new PantallaPrincipalUsuario();
                     ventas.setVisible(true);
                     ventas.setLocationRelativeTo(null);
                     this.dispose();
@@ -464,16 +469,16 @@ public class RegistroVenta extends javax.swing.JFrame {
         detalles = control.getControladoraDetalleVenta().leerPorVenta(venta);
         if (detalles.isEmpty()) {
             if (pantalla == 1) {
-                    GestionVentas ventas = new GestionVentas();
-                    ventas.setVisible(true);
-                    ventas.setLocationRelativeTo(null);
-                    this.dispose();
-                }else{
-                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
-                    ventas.setVisible(true);
-                    ventas.setLocationRelativeTo(null);
-                    this.dispose();
-                }
+                GestionVentas ventas = new GestionVentas();
+                ventas.setVisible(true);
+                ventas.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                PantallaPrincipalUsuario ventas = new PantallaPrincipalUsuario();
+                ventas.setVisible(true);
+                ventas.setLocationRelativeTo(null);
+                this.dispose();
+            }
         } else {
             boolean conf = confirmar("Se eliminará la venta completa, ¿Desea continuar?");
             if (conf) {
@@ -487,8 +492,8 @@ public class RegistroVenta extends javax.swing.JFrame {
                     ventas.setVisible(true);
                     ventas.setLocationRelativeTo(null);
                     this.dispose();
-                }else{
-                    PantallaPrincipalUsuario ventas=new PantallaPrincipalUsuario();
+                } else {
+                    PantallaPrincipalUsuario ventas = new PantallaPrincipalUsuario();
                     ventas.setVisible(true);
                     ventas.setLocationRelativeTo(null);
                     this.dispose();
