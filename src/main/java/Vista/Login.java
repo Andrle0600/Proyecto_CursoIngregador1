@@ -1,5 +1,7 @@
 package Vista;
 
+import DAO.ConexionBD;
+import java.sql.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -34,11 +36,6 @@ public class Login extends javax.swing.JFrame {
         txtContraseña.setBackground(new java.awt.Color(190, 162, 221));
         txtContraseña.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtContraseña.setForeground(new java.awt.Color(0, 0, 0));
-        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -51,11 +48,6 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setBackground(new java.awt.Color(190, 162, 221));
         txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -147,14 +139,6 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-
-    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContraseñaActionPerformed
-
     private void btnIngresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseEntered
         btnIngresar.setBackground(new java.awt.Color(120, 0, 120));
     }//GEN-LAST:event_btnIngresarMouseEntered
@@ -165,13 +149,12 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         usuario = txtUsuario.getText();
-        contraseña = txtContraseña.getText();
-        if (validarUsuario(usuario) && validarContraseña(contraseña)) {
-            PantallaPrincipal pant = new PantallaPrincipal();
-            pant.setVisible(true);
-            pant.setLocationRelativeTo(null);
-            this.dispose();
+        contraseña = new String(txtContraseña.getPassword());
+
+        if (!validarUsuarioContraseña(usuario, contraseña)) {
+            mostrarMensaje("Usuario o contraseña incorrectos", "error");
         }
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private ImageIcon loadImage(String imageName) {
@@ -215,6 +198,39 @@ public class Login extends javax.swing.JFrame {
             return true;
         }
     }
+    
+     private boolean validarUsuarioContraseña(String usuario, String contraseña) {
+        try (Connection conn = ConexionBD.getConexion()) {
+            String query = "SELECT * FROM usuario  WHERE usuario = ? AND contraseña = ?";
+            try (PreparedStatement pst = conn.prepareStatement(query)) {
+                pst.setString(1, usuario);
+                pst.setString(2, contraseña);
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    String rol = rs.getString("rol"); // Suponiendo que la tabla usuarios tiene una columna 'rol'
+                    if ("admin".equals(rol)) {
+                        // Acceso de administrador
+                        PantallaPrincipal pant = new PantallaPrincipal();
+                        pant.setVisible(true);
+                        pant.setLocationRelativeTo(null);
+                        this.dispose();
+                    } else if ("vendedor".equals(rol)) {
+                        // Acceso de vendedor
+                        PantallaPrincipalUsuario pant = new PantallaPrincipalUsuario();
+                        pant.setVisible(true);
+                        pant.setLocationRelativeTo(null);
+                        this.dispose();
+                    }
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
