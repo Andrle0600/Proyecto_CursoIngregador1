@@ -2,16 +2,38 @@ package Vista;
 
 import Controlador.ControladoraGeneral;
 import Modelo.Producto;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class GenerarReporte extends javax.swing.JFrame {
 
     ControladoraGeneral control;
     List<Producto> productos;
+    String[] titulos = {"Producto", "Cantidad", "Precio de Compra", "Precio de Venta", "Categoria", "Proveedor"};
 
     public GenerarReporte() {
         initComponents();
@@ -28,7 +50,7 @@ public class GenerarReporte extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtReporte = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnGuardar = new javax.swing.JButton();
+        btnDescargar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -57,12 +79,17 @@ public class GenerarReporte extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Generar Reporte");
 
-        btnGuardar.setBackground(new java.awt.Color(200, 76, 229));
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
-        btnGuardar.setText("Descargar Reporte");
-        btnGuardar.setBorderPainted(false);
-        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargar.setBackground(new java.awt.Color(200, 76, 229));
+        btnDescargar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDescargar.setForeground(new java.awt.Color(0, 0, 0));
+        btnDescargar.setText("Descargar Reporte");
+        btnDescargar.setBorderPainted(false);
+        btnDescargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setBackground(new java.awt.Color(102, 0, 102));
         btnVolver.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -103,7 +130,7 @@ public class GenerarReporte extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGuardar)))))
+                                .addComponent(btnDescargar)))))
                 .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,7 +143,7 @@ public class GenerarReporte extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnDescargar))
                 .addGap(16, 16, 16))
         );
 
@@ -152,6 +179,13 @@ public class GenerarReporte extends javax.swing.JFrame {
         pant.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
+        crearExcel();
+        String fecha = obtenerFecha();
+        String nombreArchivo = "productos-hasta-" + fecha + ".xlsx";
+        mostrarMensaje("Archivo generado en la carpeta \"Productos\" de su escritorio\nCon el nombre " + nombreArchivo, "informacion");
+    }//GEN-LAST:event_btnDescargarActionPerformed
 
     private ImageIcon loadImage(String imageName) {
         String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
@@ -192,8 +226,43 @@ public class GenerarReporte extends javax.swing.JFrame {
         return compra * (1 + ganancia);
     }
 
+    private String obtenerFecha() {
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+
+        // Formatear la fecha
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return fechaActual.format(formatter);
+    }
+
+    private static void mostrarMensaje(String mensaje, String tipo) {
+        int tipoMensaje;
+
+        tipoMensaje = switch (tipo.toLowerCase()) {
+            case "error" ->
+                JOptionPane.ERROR_MESSAGE;
+            case "informacion" ->
+                JOptionPane.INFORMATION_MESSAGE;
+            case "advertencia" ->
+                JOptionPane.WARNING_MESSAGE;
+            case "pregunta" ->
+                JOptionPane.QUESTION_MESSAGE;
+            default ->
+                JOptionPane.PLAIN_MESSAGE;
+        };
+
+        JOptionPane.showMessageDialog(null, mensaje, "Mensaje", tipoMensaje);
+    }
+
+    private void todoBordeDelgado(XSSFCellStyle estilo) {
+        estilo.setBorderBottom(BorderStyle.THIN);
+        estilo.setBorderTop(BorderStyle.THIN);
+        estilo.setBorderRight(BorderStyle.THIN);
+        estilo.setBorderLeft(BorderStyle.THIN);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnDescargar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -210,7 +279,6 @@ public class GenerarReporte extends javax.swing.JFrame {
                 return false;
             }
         };
-        String[] titulos = {"Producto", "Cantidad", "Precio de Compra", "Precio de Venta", "Categoria", "Proveedor"};
         modeloTabla.setColumnIdentifiers(titulos);
         modeloTabla.setRowCount(0);
 
@@ -236,6 +304,116 @@ public class GenerarReporte extends javax.swing.JFrame {
         // Aplica el render centrado a cada columna
         for (int i = 0; i < jtReporte.getColumnCount(); i++) {
             jtReporte.getColumnModel().getColumn(i).setCellRenderer(centrado);
+        }
+    }
+
+    private static final String COLOR_CABECERA = "LIGHT_GREEN";
+    private static final String NOMBRE_HOJA = "Productos";
+
+    private void crearExcel() {
+        XSSFWorkbook libro = new XSSFWorkbook();
+        XSSFSheet hoja = libro.createSheet(NOMBRE_HOJA);
+
+        // Estilo de cabecera y contenido
+        XSSFCellStyle estiloCabecera = configurarEstilo(libro, true);
+        XSSFCellStyle estiloContenido = configurarEstilo(libro, false);
+
+        //Crea sección de Fecha
+        Row filaFecha = hoja.createRow(0);
+        filaFecha.createCell(0).setCellValue("Fecha");
+        filaFecha.getCell(0).setCellStyle(estiloCabecera);
+
+        filaFecha.createCell(1).setCellValue(obtenerFecha());
+        filaFecha.getCell(1).setCellStyle(estiloContenido);
+
+        // Crear cabecera
+        crearCabecera(hoja, estiloCabecera);
+
+        // Llenar datos
+        llenarDatosProductos(hoja, estiloContenido);
+
+        // Ajustar tamaño de columnas
+        for (int i = 0; i < 7; i++) {
+            hoja.autoSizeColumn(i);
+        }
+
+        // Guardar archivo en la carpeta productos del escritorio
+        guardarArchivo(libro, generarNombreArchivo());
+    }
+
+    // Configura estilos reutilizables
+    private XSSFCellStyle configurarEstilo(XSSFWorkbook libro, boolean cabecera) {
+        XSSFCellStyle estilo = libro.createCellStyle();
+        XSSFFont fuente = libro.createFont();
+
+        if (cabecera) {
+            estilo.setFillForegroundColor(IndexedColors.valueOf(COLOR_CABECERA).getIndex());
+            estilo.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            fuente.setBold(true);
+        }
+
+        estilo.setFont(fuente);
+        estilo.setAlignment(HorizontalAlignment.CENTER);
+        todoBordeDelgado(estilo);
+
+        return estilo;
+    }
+
+    // Crea la cabecera de la hoja
+    private void crearCabecera(XSSFSheet hoja, XSSFCellStyle estilo) {
+
+        Row cabecera = hoja.createRow(2);
+        int indice = 1;
+        for (String titulo : titulos) {
+            Cell celda = cabecera.createCell(indice++);
+            celda.setCellValue(titulo);
+            celda.setCellStyle(estilo);
+        }
+    }
+
+    // Llena los datos de los productos
+    private void llenarDatosProductos(XSSFSheet hoja, XSSFCellStyle estilo) {
+        int filaInicio = 3;
+
+        for (Producto prod : productos) {
+            Row fila = hoja.createRow(filaInicio++);
+            int columnaInicio = 1;
+
+            fila.createCell(columnaInicio++).setCellValue(prod.getNombre());
+            fila.createCell(columnaInicio++).setCellValue(prod.getStock().getCantidad());
+            fila.createCell(columnaInicio++).setCellValue(formatoSoles(prod.getPrecioCompra(), false));
+            fila.createCell(columnaInicio++).setCellValue(formatoSoles(calcularPrecioVenta(prod), true));
+            fila.createCell(columnaInicio++).setCellValue(validarCategoria(prod));
+            fila.createCell(columnaInicio++).setCellValue(validarProveedor(prod));
+
+            for (int i = 1; i <= 6; i++) {
+                fila.getCell(i).setCellStyle(estilo);
+            }
+        }
+    }
+
+    // Genera el nombre del archivo basado en la fecha
+    private String generarNombreArchivo() {
+        return "productos-hasta-" + obtenerFecha() + ".xlsx";
+    }
+
+    // Guarda el archivo en la carpeta productos del escritorio
+    private void guardarArchivo(XSSFWorkbook libro, String nombreArchivo) {
+        String rutaEscritorio = System.getProperty("user.home") + File.separator + "Desktop";
+        String rutaCarpetaProductos = rutaEscritorio + File.separator + "productos";
+
+        File carpetaProductos = new File(rutaCarpetaProductos);
+        if (!carpetaProductos.exists()) {
+            carpetaProductos.mkdirs();
+        }
+
+        String rutaCompleta = rutaCarpetaProductos + File.separator + nombreArchivo;
+
+        try (OutputStream output = new FileOutputStream(rutaCompleta)) {
+            libro.write(output);
+            libro.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
