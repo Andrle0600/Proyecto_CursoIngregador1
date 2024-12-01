@@ -329,7 +329,7 @@ public class VerDetallePedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProductoMouseExited
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        AgregarProductoPedido agregar = new AgregarProductoPedido(ped.getProveedor(), ped,2);
+        AgregarProductoPedido agregar = new AgregarProductoPedido(ped.getProveedor(), ped, 2);
         agregar.setVisible(true);
         agregar.setLocationRelativeTo(null);
         this.dispose();
@@ -348,7 +348,7 @@ public class VerDetallePedido extends javax.swing.JFrame {
             int filaSelect = jtDetalles.getSelectedRow();
             if (filaSelect != -1) {
                 DetallePedido detalleSelect = detalles.get(filaSelect);
-                ModificarDetallePedido modif = new ModificarDetallePedido(detalleSelect.getIdDetallePedido(), ped,2);
+                ModificarDetallePedido modif = new ModificarDetallePedido(detalleSelect.getIdDetallePedido(), ped, 2);
                 modif.setVisible(true);
                 modif.setLocationRelativeTo(null);
                 this.dispose();
@@ -465,8 +465,14 @@ public class VerDetallePedido extends javax.swing.JFrame {
     }
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {

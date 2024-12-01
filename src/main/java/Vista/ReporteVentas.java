@@ -276,8 +276,14 @@ public class ReporteVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {
@@ -464,7 +470,7 @@ public class ReporteVentas extends javax.swing.JFrame {
     }
 
     private void cargarTabla() {
-        List<Producto> productos=obtenerProductosUnicos(ventas);
+        List<Producto> productos = obtenerProductosUnicos(ventas);
 
         // Inicializa el modelo de la tabla y establece las columnas
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -478,7 +484,7 @@ public class ReporteVentas extends javax.swing.JFrame {
         modeloTabla.setRowCount(0);
 
         // Itera las productos
-        for (Producto prod:productos) {
+        for (Producto prod : productos) {
             Object[] obj = {
                 prod.getNombre(),
                 cantidadTotalDeProducto(ventas, prod)

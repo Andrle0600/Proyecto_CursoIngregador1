@@ -358,23 +358,29 @@ public class ListarPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDetallesMouseExited
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
-        if(jtPedidos.getRowCount()>0){
-            int filaSelect=jtPedidos.getSelectedRow();
-            if(filaSelect!=-1){
-                pedido=pedidos.get(filaSelect);
-                VerDetallePedido ver=new VerDetallePedido(pedido);
+        if (jtPedidos.getRowCount() > 0) {
+            int filaSelect = jtPedidos.getSelectedRow();
+            if (filaSelect != -1) {
+                pedido = pedidos.get(filaSelect);
+                VerDetallePedido ver = new VerDetallePedido(pedido);
                 ver.setVisible(true);
                 ver.setLocationRelativeTo(null);
                 this.dispose();
-            }else{
+            } else {
                 mostrarMensaje("Seleccione una fila", "advertencia");
             }
         }
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {

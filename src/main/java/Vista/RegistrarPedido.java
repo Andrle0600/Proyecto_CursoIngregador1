@@ -417,15 +417,21 @@ public class RegistrarPedido extends javax.swing.JFrame {
         control.getControladoraPedido().crearPedido(ped);
         detalle.setPedido(ped);
         //Confimación para crear pedido
-        AgregarProductoPedido agregar=new AgregarProductoPedido(provPedido,this.ped,1);
+        AgregarProductoPedido agregar = new AgregarProductoPedido(provPedido, this.ped, 1);
         agregar.setVisible(true);
         agregar.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnGenerarPedidoActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {

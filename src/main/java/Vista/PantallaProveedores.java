@@ -714,8 +714,8 @@ public class PantallaProveedores extends javax.swing.JFrame {
             } else {
                 txtNombre.setText(prov.getNombre());
                 txtCorreo1.setText(prov.getCorreo());
-                String telefonoCompleto=prov.getTelefono();
-                String soloNumero=telefonoCompleto.replace("+51 ", "");
+                String telefonoCompleto = prov.getTelefono();
+                String soloNumero = telefonoCompleto.replace("+51 ", "");
                 txtTelefono.setText(soloNumero);
                 txtRUC.setText(prov.getRUC());
                 txtDireccion.setText(Strings.isNullOrEmpty(prov.getDireccion()) ? "Dirección no registrada" : prov.getDireccion());
@@ -807,8 +807,14 @@ public class PantallaProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContactarActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {

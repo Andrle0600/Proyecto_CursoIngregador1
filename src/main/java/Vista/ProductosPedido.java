@@ -231,7 +231,7 @@ public class ProductosPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProductoMouseExited
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        AgregarProductoPedido agregar=new AgregarProductoPedido(ped.getProveedor(), ped,1);
+        AgregarProductoPedido agregar = new AgregarProductoPedido(ped.getProveedor(), ped, 1);
         agregar.setVisible(true);
         agregar.setLocationRelativeTo(null);
         this.dispose();
@@ -246,15 +246,15 @@ public class ProductosPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarMouseExited
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if(jtDetalles.getRowCount()>0){
-            int filaSelect=jtDetalles.getSelectedRow();
-            if(filaSelect!=-1){
-                DetallePedido detalleSelect=detalles.get(filaSelect);
-                ModificarDetallePedido modif=new ModificarDetallePedido(detalleSelect.getIdDetallePedido(), ped,1);
+        if (jtDetalles.getRowCount() > 0) {
+            int filaSelect = jtDetalles.getSelectedRow();
+            if (filaSelect != -1) {
+                DetallePedido detalleSelect = detalles.get(filaSelect);
+                ModificarDetallePedido modif = new ModificarDetallePedido(detalleSelect.getIdDetallePedido(), ped, 1);
                 modif.setVisible(true);
                 modif.setLocationRelativeTo(null);
                 this.dispose();
-            }else{
+            } else {
                 mostrarMensaje("Seleccione la fila a editar", "advertencia");
             }
         }
@@ -269,23 +269,23 @@ public class ProductosPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseExited
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if(jtDetalles.getRowCount()>0){
-            int filaSelect=jtDetalles.getSelectedRow();
+        if (jtDetalles.getRowCount() > 0) {
+            int filaSelect = jtDetalles.getSelectedRow();
             //Asegurar selección
-            if(filaSelect!=-1){
-                DetallePedido detalleSelect=detalles.get(filaSelect);
-                boolean conf=confirmar("¿Desea eliminar este elemento?");
-                if(conf){
-                    double subtotal=detalleSelect.getSubtotal();
-                    double total=ped.getTotal();
-                    double nTotal=total-subtotal;
+            if (filaSelect != -1) {
+                DetallePedido detalleSelect = detalles.get(filaSelect);
+                boolean conf = confirmar("¿Desea eliminar este elemento?");
+                if (conf) {
+                    double subtotal = detalleSelect.getSubtotal();
+                    double total = ped.getTotal();
+                    double nTotal = total - subtotal;
                     ped.setTotal(nTotal);
                     control.getControladoraPedido().actualizarPedido(ped);
                     control.getControladoraDetallePedido().eliminarDetallePedido(detalleSelect.getIdDetallePedido());
                     detalles.remove(filaSelect);
                     cargarTabla();
                 }
-            }else{
+            } else {
                 mostrarMensaje("Seleccione la fila a eliminar", "advertencia");
             }
         }
@@ -319,8 +319,14 @@ public class ProductosPedido extends javax.swing.JFrame {
     }
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {

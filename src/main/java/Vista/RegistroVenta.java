@@ -410,7 +410,7 @@ public class RegistroVenta extends javax.swing.JFrame {
                     this.dispose();
                 }
             }
-            
+
         } else {
             mostrarMensaje("Finalice o cancele la venta", "adventencia");
         }
@@ -575,8 +575,14 @@ public class RegistroVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEfectivoKeyPressed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private void cargarFecha() {

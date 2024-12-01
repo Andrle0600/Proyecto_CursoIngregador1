@@ -184,7 +184,7 @@ public class GestionLogistica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        PantallaPrincipal pant=new PantallaPrincipal();
+        PantallaPrincipal pant = new PantallaPrincipal();
         pant.setVisible(true);
         pant.setLocationRelativeTo(null);
         this.dispose();
@@ -195,7 +195,7 @@ public class GestionLogistica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPedidosMouseEntered
 
     private void btnPedidosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPedidosMouseExited
-        btnPedidos.setBackground(new java.awt.Color(200,76,229));
+        btnPedidos.setBackground(new java.awt.Color(200, 76, 229));
     }//GEN-LAST:event_btnPedidosMouseExited
 
     private void btnProveedoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseEntered
@@ -203,26 +203,32 @@ public class GestionLogistica extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProveedoresMouseEntered
 
     private void btnProveedoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseExited
-        btnProveedores.setBackground(new java.awt.Color(200,76,229));
+        btnProveedores.setBackground(new java.awt.Color(200, 76, 229));
     }//GEN-LAST:event_btnProveedoresMouseExited
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        PantallaProveedores prov=new PantallaProveedores();
+        PantallaProveedores prov = new PantallaProveedores();
         prov.setVisible(true);
         prov.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
-        ListarPedidos listar=new ListarPedidos();
+        ListarPedidos listar = new ListarPedidos();
         listar.setVisible(true);
         listar.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bckg;

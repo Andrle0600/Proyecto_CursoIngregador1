@@ -10,11 +10,11 @@ public class RegistrarCategoria extends javax.swing.JFrame {
 
     ControladoraGeneral control;
     Categoria categoria;
-    
+
     public RegistrarCategoria() {
         initComponents();
-        control=new ControladoraGeneral();
-        categoria=new Categoria();
+        control = new ControladoraGeneral();
+        categoria = new Categoria();
     }
 
     @SuppressWarnings("unchecked")
@@ -286,17 +286,17 @@ public class RegistrarCategoria extends javax.swing.JFrame {
             mostrarMensaje("Ambos campos son obligatorios", "advertencia");
             return;
         }
-        if(!esNumeroDecimal(textoGanancia)){
+        if (!esNumeroDecimal(textoGanancia)) {
             mostrarMensaje("No es un número.\nEl decimal debe ser con punto.\nEjm: 0.7", "error");
             limpiar();
             return;
         }
-        double ganancia=Double.parseDouble(textoGanancia);
+        double ganancia = Double.parseDouble(textoGanancia);
         categoria.setGanancia(ganancia);
         categoria.setNombre(nombre);
         control.getControladoraCategoria().crearCategoria(categoria);
         mostrarMensaje("Categoria creada correctamente", "informacion");
-        limpiar();        
+        limpiar();
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void btnVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseEntered
@@ -320,13 +320,19 @@ public class RegistrarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOtrosActionPerformed
 
     private void btnVerTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodoActionPerformed
-        VerCategorias ver=new VerCategorias();
+        VerCategorias ver = new VerCategorias();
         abrirVentana(ver);
     }//GEN-LAST:event_btnVerTodoActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private void abrirVentana(JFrame jframe) {
@@ -362,8 +368,8 @@ public class RegistrarCategoria extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(null, mensaje, "Mensaje", tipoMensaje);
     }
-    
-    private void limpiar(){
+
+    private void limpiar() {
         txtNombre.setText("");
         txtGanancia.setText("");
     }

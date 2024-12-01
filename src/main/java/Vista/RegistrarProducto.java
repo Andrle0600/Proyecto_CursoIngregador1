@@ -282,7 +282,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         proveedor = control.getControladoraProveedor().leerPorNombre(prov);
         //codigo
         /*Traer los productos de la categoria*/
-        List<Producto> productos=control.getControladoraProducto().leerPorCategoria(categoria);
+        List<Producto> productos = control.getControladoraProducto().leerPorCategoria(categoria);
         String codigo = generarCodigo(proveedor, categoria, productos);
         //Crear stock
         Stock stock = new Stock();
@@ -305,8 +305,14 @@ public class RegistrarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {
@@ -381,7 +387,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         String prov = proveedor.getNombre().substring(0, 3).toUpperCase();
         return codigo + cat + indice + prov;
     }
-    
+
     private void cargarProveedores() {
         comboProveedor.removeAllItems();
         for (Proveedor provedor : proveedores) {

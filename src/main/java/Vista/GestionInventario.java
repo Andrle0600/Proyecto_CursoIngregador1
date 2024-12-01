@@ -184,7 +184,7 @@ public class GestionInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirProductoActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-        GenerarReporte generar=new GenerarReporte();
+        GenerarReporte generar = new GenerarReporte();
         generar.setVisible(true);
         generar.setLocationRelativeTo(null);
         this.dispose();
@@ -199,7 +199,7 @@ public class GestionInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        PantallaPrincipal pant=new PantallaPrincipal();
+        PantallaPrincipal pant = new PantallaPrincipal();
         pant.setVisible(true);
         pant.setLocationRelativeTo(null);
         this.dispose();
@@ -213,15 +213,21 @@ public class GestionInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
-        EliminarProducto eliminar=new EliminarProducto();
+        EliminarProducto eliminar = new EliminarProducto();
         eliminar.setVisible(true);
         eliminar.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

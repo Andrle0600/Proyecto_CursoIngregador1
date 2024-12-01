@@ -14,7 +14,7 @@ public class CorreoPedido extends javax.swing.JFrame {
     public CorreoPedido(int id) {
         initComponents();
         control = new ControladoraGeneral();
-        prov=new Proveedor();
+        prov = new Proveedor();
         cargarCorreo(id);
     }
 
@@ -376,7 +376,7 @@ public class CorreoPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProveedorMouseExited
 
     private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
-        RegistrarProveedor reg=new RegistrarProveedor();
+        RegistrarProveedor reg = new RegistrarProveedor();
         reg.setVisible(true);
         reg.setLocationRelativeTo(null);
         this.dispose();
@@ -391,15 +391,21 @@ public class CorreoPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListaProveedoresMouseExited
 
     private void btnListaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaProveedoresActionPerformed
-        ListarPedidos reg=new ListarPedidos();
+        ListarPedidos reg = new ListarPedidos();
         reg.setVisible(true);
         reg.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnListaProveedoresActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {
@@ -422,7 +428,7 @@ public class CorreoPedido extends javax.swing.JFrame {
     }
 
     private void limpiar() {
-        
+
     }
 
     public boolean confirmar(String mensaje) {
@@ -463,7 +469,7 @@ public class CorreoPedido extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarCorreo(int id) {
-       prov=control.getControladoraProveedor().leerProveedor(id);
-       txtCorreo.setText(prov.getCorreo());
+        prov = control.getControladoraProveedor().leerProveedor(id);
+        txtCorreo.setText(prov.getCorreo());
     }
 }

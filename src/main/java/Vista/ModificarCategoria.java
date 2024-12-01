@@ -225,28 +225,28 @@ public class ModificarCategoria extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         String nombre = txtNombre.getText();
-        String textoGanancia = txtGanancia.getText();       
-        
+        String textoGanancia = txtGanancia.getText();
+
         //validar ambos
         if (nombre.equals("") || textoGanancia.equals("")) {
             mostrarMensaje("Ambos campos son obligatorios", "advertencia");
             return;
         }
-        
+
         //validar decimal
-        if(!esNumeroDecimal(textoGanancia)){
+        if (!esNumeroDecimal(textoGanancia)) {
             mostrarMensaje("No es un número.\nEl decimal debe ser con punto.\nEjm: 0.7", "error");
             return;
         }
-        
-        double ganancia=Double.parseDouble(textoGanancia);
+
+        double ganancia = Double.parseDouble(textoGanancia);
 
         // Establecer los valores en el objeto proveedor y guardar
         categoria.setNombre(nombre);
         categoria.setGanancia(ganancia);
         control.getControladoraCategoria().actualizarCategoria(categoria);
         mostrarMensaje("Categoria actualizada correctamente", "informacion");
-        VerCategorias ver=new VerCategorias();
+        VerCategorias ver = new VerCategorias();
         ver.setVisible(true);
         ver.setLocationRelativeTo(null);
         this.dispose();
@@ -270,7 +270,7 @@ public class ModificarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseExited
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        VerCategorias pant=new VerCategorias();
+        VerCategorias pant = new VerCategorias();
         pant.setVisible(true);
         pant.setLocationRelativeTo(null);
         this.dispose();
@@ -281,8 +281,14 @@ public class ModificarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {
@@ -304,7 +310,6 @@ public class ModificarCategoria extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, mensaje, "Mensaje", tipoMensaje);
     }
 
-    
     private boolean esNumeroDecimal(String texto) {
         try {
             Double.parseDouble(texto);

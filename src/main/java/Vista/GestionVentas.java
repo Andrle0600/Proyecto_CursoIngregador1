@@ -20,7 +20,7 @@ public class GestionVentas extends javax.swing.JFrame {
     public GestionVentas() {
         initComponents();
         this.control = new ControladoraGeneral();
-        this.venta=new Venta();
+        this.venta = new Venta();
     }
 
     @SuppressWarnings("unchecked")
@@ -138,7 +138,7 @@ public class GestionVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentasUltimoMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasUltimoMesActionPerformed
-        FiltrarFecha igu=new FiltrarFecha();
+        FiltrarFecha igu = new FiltrarFecha();
         igu.setVisible(true);
         igu.setLocationRelativeTo(null);
         this.dispose();
@@ -149,7 +149,7 @@ public class GestionVentas extends javax.swing.JFrame {
         if (conf) {
             Date fecha = null;
             try {
-                fecha=obtenerFecha();
+                fecha = obtenerFecha();
             } catch (ParseException ex) {
                 Logger.getLogger(GestionVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -179,8 +179,14 @@ public class GestionVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     public boolean confirmar(String mensaje) {

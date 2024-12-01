@@ -355,12 +355,12 @@ public class ModificarProveedor extends javax.swing.JFrame {
         String nombre = txtNombre.getText();
         String telefono = txtTelefono.getText();
         String correo = txtCorreo.getText();
-        String RUC=txtRUC.getText();
+        String RUC = txtRUC.getText();
         //Uso de guava para transformar a null si lo deja vacío
         String direccion = Strings.emptyToNull(txtDireccion.getText());
 
         // Validar campos obligatorios
-        if (!camposObligatorios(nombre, telefono, correo,RUC)) {
+        if (!camposObligatorios(nombre, telefono, correo, RUC)) {
             mostrarMensaje("Nombre, RUC, teléfono y correo no pueden quedar vacíos", "advertencia");
             return;
         }
@@ -378,7 +378,7 @@ public class ModificarProveedor extends javax.swing.JFrame {
             mostrarMensaje("El RUC debe ser numérico y tener 11 dígitos", "error");
             return;
         }
-        
+
         // Validar y establecer teléfono
         String telefonoCompleto = validarTelefono(telefono);
         if (telefonoCompleto == null) {
@@ -425,8 +425,14 @@ public class ModificarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private ImageIcon loadImage(String imageName) {
-        String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\Imagenes\\" + imageName;
-        return new ImageIcon(imagePath);
+        String path = "/Imagenes/" + imageName;
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("No se encontró la imagen: " + path);
+            return null;
+        }
     }
 
     private static void mostrarMensaje(String mensaje, String tipo) {
@@ -456,7 +462,7 @@ public class ModificarProveedor extends javax.swing.JFrame {
     }
 
     // Método para validar campos obligatorios
-    private boolean camposObligatorios(String nombre, String telefono, String correo,String RUC) {
+    private boolean camposObligatorios(String nombre, String telefono, String correo, String RUC) {
         return !nombre.isEmpty() && !telefono.isEmpty() && !correo.isEmpty() && !RUC.isEmpty();
     }
 
@@ -469,7 +475,7 @@ public class ModificarProveedor extends javax.swing.JFrame {
         }
         return null;
     }
-    
+
     // Método para validar RUC
     private String validarRUC(String RUC) {
         //Se quita el espacio y se valida que todos sean números con apache commons
