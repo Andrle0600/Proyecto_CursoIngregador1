@@ -27,6 +27,7 @@ public class ReporteVentas extends javax.swing.JFrame {
     ControladoraGeneral control;
     List<Venta> ventas;
     Date inicio, fin;
+    Producto prod;
 
     public ReporteVentas(Date inicio, Date fin, List<Venta> ventas) {
         this.inicio = inicio;
@@ -374,14 +375,14 @@ public class ReporteVentas extends javax.swing.JFrame {
         double total = calcularTotal(ventas);
         int diasEntre = (int) calcularDias(inicio, fin);
         double promedio = total / diasEntre;
-        Producto prod = masVendido(ventas);
+        prod = masVendido(ventas);
 
         //setear valores
         txtNumero.setText(numero);
         txtTotal.setText(formatoSoles(total, false));
         txtPromedio.setText(formatoSoles(promedio, true));
         txtDias.setText(String.valueOf(diasEntre));
-        txtMasVendido.setText(prod.getNombre());
+        txtMasVendido.setText((String) validarProducto(prod));
 
     }
 
@@ -405,11 +406,13 @@ public class ReporteVentas extends javax.swing.JFrame {
             // Iterar sobre cada detalle de la venta
             for (DetalleVenta detalle : detalles) {
                 Producto producto = detalle.getProducto();
-                int cantidad = detalle.getCantidad();
+                if (producto != null) {  // Solo contar productos que no sean descontinuados
+                    int cantidad = detalle.getCantidad();
 
-                // Sumar la cantidad al total del producto en el mapa
-                totalPorProducto.put(producto,
-                        totalPorProducto.getOrDefault(producto, 0) + cantidad);
+                    // Sumar la cantidad al total del producto en el mapa
+                    totalPorProducto.put(producto,
+                            totalPorProducto.getOrDefault(producto, 0) + cantidad);
+                }
             }
         }
 
@@ -440,7 +443,9 @@ public class ReporteVentas extends javax.swing.JFrame {
             // Iterar sobre cada detalle de la venta
             for (DetalleVenta detalle : detalles) {
                 Producto producto = detalle.getProducto();
-                productosUnicos.add(producto); // Añadimos al Set
+                if (producto != null) {
+                    productosUnicos.add(producto);// Añadimos al Set
+                }
             }
         }
 
@@ -460,7 +465,28 @@ public class ReporteVentas extends javax.swing.JFrame {
                 Producto producto = detalle.getProducto();
 
                 // Verificar si el producto del detalle coincide con el producto buscado
-                if (producto.equals(productoBuscado)) {
+                if (producto != null && producto.equals(productoBuscado)) {
+                    cantidadTotal += detalle.getCantidad();
+                }
+            }
+        }
+
+        return cantidadTotal;
+    }
+
+    private int cantidadTotalDeProductosDescontinuados(List<Venta> ventas) {
+        int cantidadTotal = 0;
+
+        // Iterar sobre cada venta
+        for (Venta venta : ventas) {
+            List<DetalleVenta> detalles = venta.getDetallesVenta();
+
+            // Iterar sobre cada detalle de la venta
+            for (DetalleVenta detalle : detalles) {
+                Producto producto = detalle.getProducto();
+
+                // Si el producto es null (descontinuado), sumamos la cantidad vendida
+                if (producto == null) {
                     cantidadTotal += detalle.getCantidad();
                 }
             }
@@ -484,13 +510,21 @@ public class ReporteVentas extends javax.swing.JFrame {
         modeloTabla.setRowCount(0);
 
         // Itera las productos
-        for (Producto prod : productos) {
-            Object[] obj = {
-                prod.getNombre(),
-                cantidadTotalDeProducto(ventas, prod)
-            };
-            modeloTabla.addRow(obj);
+        for (Producto produc : productos) {
+            if (produc != null) {
+                Object[] obj = {
+                    produc.getNombre(), // Mostrar el nombre del producto si no es null
+                    cantidadTotalDeProducto(ventas, produc)
+                };
+                modeloTabla.addRow(obj);
+            }
         }
+
+        int cantidadProductosDescontinuados = cantidadTotalDeProductosDescontinuados(ventas);
+        Object[] objDescontinuados = {
+            "Productos Descontinuados", cantidadProductosDescontinuados
+        };
+        modeloTabla.addRow(objDescontinuados);
 
         jtProductos.setModel(modeloTabla);
 
@@ -502,6 +536,10 @@ public class ReporteVentas extends javax.swing.JFrame {
         for (int i = 0; i < jtProductos.getColumnCount(); i++) {
             jtProductos.getColumnModel().getColumn(i).setCellRenderer(centrado);
         }
+    }
+
+    private Object validarProducto(Producto producto) {
+        return (producto == null) ? "«Producto Descontinuado»" : producto.getNombre();
     }
 
 }
