@@ -12,6 +12,7 @@ import Modelo.Stock;
 import Modelo.DetallePedido;
 import Modelo.Producto;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -305,6 +306,20 @@ public class ProductoJpaController implements Serializable {
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
+        } finally {
+            em.close();
+        }
+    }
+
+    List<Producto> findByCategory(Categoria categoria) {
+         EntityManager em = getEntityManager();
+        String query = "SELECT d FROM Producto d WHERE d.categoria = :categoria";
+        try {
+            return em.createQuery(query, Producto.class)
+                    .setParameter("categoria", categoria)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
         } finally {
             em.close();
         }

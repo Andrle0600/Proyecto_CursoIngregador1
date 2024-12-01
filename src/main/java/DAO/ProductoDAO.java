@@ -1,5 +1,6 @@
 package DAO;
 
+import Modelo.Categoria;
 import Modelo.Producto;
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ProductoDAO {
     Producto leerPorCodigo(String codigo);
    
     List<Producto> leerTodo();
+    
+    List<Producto> leerPorCategoria(Categoria categoria);
 }

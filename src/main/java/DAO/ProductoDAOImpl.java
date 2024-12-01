@@ -1,6 +1,7 @@
 package DAO;
 
 import DAO.exceptions.NonexistentEntityException;
+import Modelo.Categoria;
 import Modelo.Producto;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,6 +56,11 @@ public class ProductoDAOImpl implements ProductoDAO{
     @Override
     public Producto leerPorCodigo(String codigo) {
         return productoJpa.findByCodigo(codigo);
+    }
+
+    @Override
+    public List<Producto> leerPorCategoria(Categoria categoria) {
+        return productoJpa.findByCategory(categoria);
     }
     
 }

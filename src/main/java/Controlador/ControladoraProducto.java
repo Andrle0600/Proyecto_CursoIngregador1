@@ -2,6 +2,7 @@ package Controlador;
 
 import DAO.ProductoDAO;
 import DAO.ProductoDAOImpl;
+import Modelo.Categoria;
 import Modelo.Producto;
 import java.util.List;
 
@@ -38,5 +39,9 @@ public class ControladoraProducto {
     
     public Producto leerPorCodigo(String codigo){
         return productoDao.leerPorCodigo(codigo);
+    }
+    
+    public List<Producto> leerPorCategoria(Categoria categoria){
+        return productoDao.leerPorCategoria(categoria);
     }
 }
