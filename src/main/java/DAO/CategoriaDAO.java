@@ -13,4 +13,6 @@ public interface CategoriaDAO {
     void eliminar(int id);
     
     List<Categoria> leerTodo();
+
+    public Categoria leerPorNombre(String nombre);
 }

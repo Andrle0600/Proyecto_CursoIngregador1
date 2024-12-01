@@ -46,4 +46,9 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     public List<Categoria> leerTodo() {
         return categoriaJpa.findCategoriaEntities();
     }
+
+    @Override
+    public Categoria leerPorNombre(String nombre) {
+        return categoriaJpa.findByName(nombre);
+    }
 }
