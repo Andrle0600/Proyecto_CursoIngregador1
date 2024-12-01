@@ -210,7 +210,7 @@ public class EliminarProducto extends javax.swing.JFrame {
         boolean conf = confirmar("El producto aparecerá como descontinuado en todas las referencias que tenga.\n¿Desea proceder con la eliminación?");
         if (conf) {
             control.getControladoraProducto().eliminarProducto(prod.getIdProducto());
-            mostrarMensaje("El producto fue eliminado", "infomración");
+            mostrarMensaje("El producto fue eliminado", "informacion");
             GestionInventario pant = new GestionInventario();
             pant.setVisible(true);
             pant.setLocationRelativeTo(null);
