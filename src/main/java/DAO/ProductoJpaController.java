@@ -10,6 +10,7 @@ import Modelo.Categoria;
 import Modelo.Proveedor;
 import Modelo.Stock;
 import Modelo.DetallePedido;
+import Modelo.DetalleVenta;
 import Modelo.Producto;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -204,30 +205,33 @@ public class ProductoJpaController implements Serializable {
             Producto producto;
             try {
                 producto = em.getReference(Producto.class, id);
-                producto.getIdProducto();
+                producto.getIdProducto(); // Verifica que exista el producto
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The producto with id " + id + " no longer exists.", enfe);
             }
-            Categoria categoria = producto.getCategoria();
-            if (categoria != null) {
-                categoria.getProductos().remove(producto);
-                categoria = em.merge(categoria);
+
+            // Anular referencias en DetallePedido
+            List<DetallePedido> detallesPedido = producto.getDetallesPedido();
+            for (DetallePedido detallePedido : detallesPedido) {
+                detallePedido.setProducto(null);
+                em.merge(detallePedido);
             }
-            Proveedor proveedor = producto.getProveedor();
-            if (proveedor != null) {
-                proveedor.getProductos().remove(producto);
-                proveedor = em.merge(proveedor);
+
+            // Anular referencias en DetalleVenta
+            List<DetalleVenta> detallesVenta = producto.getDetallesVenta();
+            for (DetalleVenta detalleVenta : detallesVenta) {
+                detalleVenta.setProducto(null);
+                em.merge(detalleVenta);
             }
+
+            // Anular referencia en Stock
             Stock stock = producto.getStock();
             if (stock != null) {
                 stock.setProducto(null);
-                stock = em.merge(stock);
+                em.merge(stock);
             }
-            List<DetallePedido> detallesPedido = producto.getDetallesPedido();
-            for (DetallePedido detallesPedidoDetallePedido : detallesPedido) {
-                detallesPedidoDetallePedido.setProducto(null);
-                detallesPedidoDetallePedido = em.merge(detallesPedidoDetallePedido);
-            }
+
+            // Eliminar el producto
             em.remove(producto);
             em.getTransaction().commit();
         } finally {
@@ -296,7 +300,7 @@ public class ProductoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public Producto findByCodigo(String codigo) {
         EntityManager em = getEntityManager();
         String query = "SELECT p FROM Producto p WHERE UPPER(p.codigo) = UPPER(:codigo)";
@@ -312,7 +316,7 @@ public class ProductoJpaController implements Serializable {
     }
 
     List<Producto> findByCategory(Categoria categoria) {
-         EntityManager em = getEntityManager();
+        EntityManager em = getEntityManager();
         String query = "SELECT d FROM Producto d WHERE d.categoria = :categoria";
         try {
             return em.createQuery(query, Producto.class)
