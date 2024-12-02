@@ -15,8 +15,6 @@
             <property name="javax.persistence.jdbc.user" value="u44okiaiwbjavwj7"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.password" value="xXaZu81WKNomZyX6pKOo"/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
-            <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>

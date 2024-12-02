@@ -392,8 +392,12 @@ public class ModificarProveedor extends javax.swing.JFrame {
         prov.setDireccion(direccion);
         prov.setTelefono(telefonoCompleto);
         prov.setRUC(RucValidado);
-        control.getControladoraProveedor().crearProveedor(prov);
-        mostrarMensaje("Proveedor guardado correctamente", "informacion");
+        control.getControladoraProveedor().actualizarProveedor(prov);
+        mostrarMensaje("Proveedor actualizado correctamente", "informacion");
+        PantallaProveedores pant = new PantallaProveedores();
+        pant.setVisible(true);
+        pant.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
