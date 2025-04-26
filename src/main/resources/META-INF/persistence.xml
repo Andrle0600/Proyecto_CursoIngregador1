@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-    <persistence-unit name="integradorPU" transaction-type="RESOURCE_LOCAL">
-        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>Modelo.Categoria</class>
-        <class>Modelo.DetallePedido</class>
-        <class>Modelo.DetalleVenta</class>
-        <class>Modelo.Pedido</class>
-        <class>Modelo.Producto</class>
-        <class>Modelo.Proveedor</class>
-        <class>Modelo.Stock</class>
-        <class>Modelo.Venta</class>
-        <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://u44okiaiwbjavwj7:xXaZu81WKNomZyX6pKOo@b9cbymoe3xtutiwj1wwj-mysql.services.clever-cloud.com:3306/b9cbymoe3xtutiwj1wwj"/>
-            <property name="javax.persistence.jdbc.user" value="u44okiaiwbjavwj7"/>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.password" value="xXaZu81WKNomZyX6pKOo"/>
-        </properties>
-    </persistence-unit>
+  <persistence-unit name="integradorPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>Modelo.Categoria</class>
+    <class>Modelo.DetallePedido</class>
+    <class>Modelo.DetalleVenta</class>
+    <class>Modelo.Pedido</class>
+    <class>Modelo.Producto</class>
+    <class>Modelo.Proveedor</class>
+    <class>Modelo.Stock</class>
+    <class>Modelo.Venta</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bdesdiel?serverTimezome=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
 </persistence>

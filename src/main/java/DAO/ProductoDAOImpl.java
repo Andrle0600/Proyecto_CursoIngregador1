@@ -55,6 +55,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 
     @Override
     public Producto leerPorCodigo(String codigo) {
+        System.out.println("Query ejecutada con código: [" + codigo + "]");
         return productoJpa.findByCodigo(codigo);
     }
 

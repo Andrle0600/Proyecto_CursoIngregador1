@@ -418,8 +418,14 @@ public class RegistroVenta extends javax.swing.JFrame {
 
     private void txtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyPressed
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-            String codigo = txtCodigo.getText();
+            String codigo = txtCodigo.getText().trim();
+            System.out.println("Código ingresado: [" + codigo + "]");
             producto = control.getControladoraProducto().leerPorCodigo(codigo);
+            if (producto == null) {
+                JOptionPane.showMessageDialog(this, "Producto no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            System.out.println(producto.getNombre());
             //Obteniendo nombre y calculando precio
             String nombre = producto.getNombre();
             double precioCompra = producto.getPrecioCompra();

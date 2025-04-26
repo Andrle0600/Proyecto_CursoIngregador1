@@ -2,14 +2,14 @@ package Controlador;
 
 public class ControladoraGeneral {
 
-    private ControladoraProveedor controlProveedor;
-    private ControladoraPedido controlPedido;
-    private ControladoraProducto controlProducto;
-    private ControladoraDetallePedido controlDetallePedido;
-    private ControladoraStock controlStock;
-    private ControladoraVenta controlVenta;
-    private ControladoraDetalleVenta controlDetalleVenta;
-    private ControladoraCategoria controlCategoria;
+    private final ControladoraProveedor controlProveedor;
+    private final ControladoraPedido controlPedido;
+    private final ControladoraProducto controlProducto;
+    private final ControladoraDetallePedido controlDetallePedido;
+    private final ControladoraStock controlStock;
+    private final ControladoraVenta controlVenta;
+    private final ControladoraDetalleVenta controlDetalleVenta;
+    private final ControladoraCategoria controlCategoria;
 
     public ControladoraGeneral() {
         this.controlProveedor = new ControladoraProveedor();

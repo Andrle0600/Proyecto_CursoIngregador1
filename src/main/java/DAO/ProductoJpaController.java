@@ -303,11 +303,14 @@ public class ProductoJpaController implements Serializable {
 
     public Producto findByCodigo(String codigo) {
         EntityManager em = getEntityManager();
+        System.out.println("Query ejecutada con código: [" + codigo + "]");
         String query = "SELECT p FROM Producto p WHERE UPPER(p.codigo) = UPPER(:codigo)";
         try {
-            return em.createQuery(query, Producto.class)
+            List<Producto> resultados = em.createQuery(query, Producto.class)
                     .setParameter("codigo", codigo)
-                    .getSingleResult();
+                    .getResultList();
+            System.out.println("Resultados encontrados: " + resultados.size());
+            return resultados.isEmpty() ? null : resultados.get(0);
         } catch (NoResultException e) {
             return null;
         } finally {
